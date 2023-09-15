@@ -180,10 +180,10 @@
             <Sheat cx={580} cy={290} no={7} />
             <Sheat cx={820} cy={290} no={8} />
             <Sheat cx={110} cy={200} no={9} />
-            <Sheat cx={360} cy={200} no={10} />
-            <Sheat cx={580} cy={200} no={11} />
-            <Sheat cx={820} cy={200} no={12} />
-            <Sheat cx={580} cy={120} no={13} />
+            <Sheat cx={360} cy={200} no={11} />
+            <Sheat cx={580} cy={200} no={12} />
+            <Sheat cx={820} cy={200} no={13} />
+            <Sheat cx={580} cy={120} no={15} />
             <Sheat cx={820} cy={120} no={14} />
 
             <Sheat cx={110} cy={30}  no={40} />
