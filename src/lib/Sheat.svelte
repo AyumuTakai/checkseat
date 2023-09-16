@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { events } from "../eventStore";
+    import { events, type Action } from "../eventStore";
 
     export let no: number = 0;
     export let cx: number = 0;
@@ -11,11 +11,13 @@
     const nonActiveColor = "white";
 
     const writeLog = (msg: string) => {
-        events.update((list: string[]) => {
+        events.update((list: Action[]) => {
             console.log(no, msg, new Date().toLocaleTimeString());
-            list.push(
-                `${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}  [ ${no} ]  ${msg}`
-            );
+            list.push({
+                datetime:new Date(),
+                no:no,
+                action: msg
+            });
             return list;
         });
     };

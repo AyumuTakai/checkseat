@@ -5,7 +5,7 @@
 <div>
     <ul>
         {#each $events as event}
-            <li>{event}</li>
+            <li>{event.datetime.toLocaleDateString()} {event.datetime.toLocaleTimeString()} [{event.no}] {event.action}</li>
         {/each}
     </ul>
 </div>
