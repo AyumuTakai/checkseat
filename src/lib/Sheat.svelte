@@ -44,7 +44,10 @@
     bind:this={el}
 />
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<text x={cx - 4} y={cy + 8} on:click={onClickHndler}>{no}</text>
+<text x={cx} y={cy} on:click={onClickHndler}
+text-anchor="middle"
+dominant-baseline = "central"
+>{no}</text>
 
 <style>
     ellipse {
