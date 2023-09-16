@@ -14,6 +14,8 @@
     div {
         width: 100%;
         height: 100%;
+        background-color: white;
+        border: solid 10px #ccc;
     }
     li {
         list-style: none;

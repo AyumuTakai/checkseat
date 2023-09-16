@@ -3,14 +3,24 @@
   import RoomMap from "./lib/RoomMap.svelte";
 </script>
 
-<main style="height:100vh">
-  <div style="height:50vh">
+<main>
     <RoomMap />
-  </div>
-  <div style="height:50vh">
     <EventList />
-  </div>
 </main>
 
 <style>
+  :global(*) {
+    box-sizing: border-box;
+  }
+  main {
+    position: absolute;
+    top:0;
+    left:0;
+    width: 100vw;
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+  }
 </style>

@@ -14,7 +14,7 @@
     };
 </script>
 
-<div>
+<section>
     <svg
         xmlns="http://www.w3.org/2000/svg"
         xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -221,19 +221,24 @@
             ></g
         ></svg
     >
-</div>
+</section>
 
 <style>
+    :global(body) {
+        background-color: gray;
+    }
+    section {
+        width: 100%;
+        height: 100%;
+        padding: 8px;
+        background-color: #ccc;
+    }
     svg {
         width: 100%;
+        height: 100%;
+        object-fit: contain;
     }
     svg rect {
         fill: white;
-    }
-    svg ellipse {
-        fill: white;
-    }
-    svg ellipse#active {
-        fill: red;
     }
 </style>
