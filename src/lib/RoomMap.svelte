@@ -81,7 +81,4 @@
         height: 100%;
         object-fit: contain;
     }
-    svg rect {
-        fill: white;
-    }
 </style>
