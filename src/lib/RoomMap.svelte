@@ -68,17 +68,18 @@
 
 <style>
     :global(body) {
-        background-color: gray;
+        background-color: #ccc;
     }
     section {
         width: 100%;
         height: 100%;
         padding: 8px;
-        background-color: #ccc;
+        background-color: white;
     }
     svg {
         width: 100%;
         height: 100%;
         object-fit: contain;
+        background-color: white;
     }
 </style>
