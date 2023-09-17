@@ -22,7 +22,7 @@
         });
     };
 
-    const onClickHndler = (e: Event) => {
+    const onClickHandler = (e: Event) => {
         // const el = e.target as SVGEllipseElement;
         if (el.style.fill == activeColor) {
             el.style.fill = nonActiveColor;
@@ -42,11 +42,11 @@
     ry="20"
     stroke="rgb(0, 0, 0)"
     pointer-events="all"
-    on:click={onClickHndler}
+    on:click={onClickHandler}
     bind:this={el}
 />
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<text x={cx} y={cy} on:click={onClickHndler}
+<text x={cx} y={cy} on:click={onClickHandler}
 text-anchor="middle"
 dominant-baseline = "central"
 >{no}</text>

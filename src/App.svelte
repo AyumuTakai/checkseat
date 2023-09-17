@@ -1,27 +1,30 @@
 <script lang="ts">
-    import AttendList from "./lib/AttendList.svelte";
+  import AttendList from "./lib/AttendList.svelte";
   import EventList from "./lib/EventList.svelte";
   import RoomMap from "./lib/RoomMap.svelte";
   import Tabs from "./lib/Tabs.svelte";
+    import { rooms } from "./roomStore";
 
   const items = [
     {
-      label:"List",
-      value:1,
-      component: AttendList
+      label: "List",
+      value: 1,
+      component: AttendList,
     },
     {
-      label:"Log",
-      value:2,
-      component: EventList
+      label: "Log",
+      value: 2,
+      component: EventList,
     },
-
   ];
+
+
+
 </script>
 
 <main>
-    <RoomMap />
-    <Tabs {items} />
+  <RoomMap room={$rooms[0]}/>
+  <Tabs {items} />
 </main>
 
 <style>
@@ -30,8 +33,8 @@
   }
   main {
     position: absolute;
-    top:0;
-    left:0;
+    top: 0;
+    left: 0;
     width: 100vw;
     height: 100vh;
     padding: 0;
