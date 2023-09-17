@@ -28,7 +28,9 @@
 </main>
 
 <style>
-  :global(*) {
+:global(*),
+:global(*::before),
+:global(*::after) {
     box-sizing: border-box;
   }
   main {
