@@ -1,11 +1,27 @@
 <script lang="ts">
+    import AttendList from "./lib/AttendList.svelte";
   import EventList from "./lib/EventList.svelte";
   import RoomMap from "./lib/RoomMap.svelte";
+  import Tabs from "./lib/Tabs.svelte";
+
+  const items = [
+    {
+      label:"List",
+      value:1,
+      component: AttendList
+    },
+    {
+      label:"Log",
+      value:2,
+      component: EventList
+    },
+
+  ];
 </script>
 
 <main>
     <RoomMap />
-    <EventList />
+    <Tabs {items} />
 </main>
 
 <style>
