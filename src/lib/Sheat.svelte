@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { events, type Action } from "../eventStore";
+    import { currentRoom, type AttendLine, type Room } from "../roomStore";
 
     export let no: number = 0;
     export let cx: number = 0;
@@ -7,18 +7,32 @@
 
     let el: SVGEllipseElement;
 
+    let attend: AttendLine | undefined;
+
     const activeColor = "red";
     const nonActiveColor = "white";
 
     const writeLog = (msg: string) => {
-        events.update((list: Action[]) => {
+        currentRoom.update((room: Room) => {
+            const now = new Date();
+            if( ! attend ) {
+                attend = {
+                    no,
+                    begin: now.getHours() * 100 + now.getMinutes(),
+                    end: 2400
+                }
+                room.attends.push(attend);
+            }else{
+                attend.end = now.getHours() * 100 + now.getMinutes();
+                attend = undefined;
+            }
             console.log(no, msg, new Date().toLocaleTimeString());
-            list.push({
-                datetime:new Date(),
-                no:no,
-                action: msg
+            room.events.push({
+                datetime: new Date(),
+                no: no,
+                action: msg,
             });
-            return list;
+            return room;
         });
     };
 
@@ -46,10 +60,13 @@
     bind:this={el}
 />
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<text x={cx} y={cy} on:click={onClickHandler}
-text-anchor="middle"
-dominant-baseline = "central"
->{no}</text>
+<text
+    x={cx}
+    y={cy}
+    on:click={onClickHandler}
+    text-anchor="middle"
+    dominant-baseline="central">{no}</text
+>
 
 <style>
     ellipse {

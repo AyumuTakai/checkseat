@@ -1,9 +1,10 @@
 <script lang="ts">
+  import { onMount } from "svelte";
   import AttendList from "./lib/AttendList.svelte";
   import EventList from "./lib/EventList.svelte";
   import RoomMap from "./lib/RoomMap.svelte";
   import Tabs from "./lib/Tabs.svelte";
-    import { rooms } from "./roomStore";
+  import { currentRoom, rooms } from "./roomStore";
 
   const items = [
     {
@@ -18,19 +19,20 @@
     },
   ];
 
-
-
+  onMount(() => {
+    currentRoom.set($rooms[0]);
+  });
 </script>
 
 <main>
-  <RoomMap room={$rooms[0]}/>
+  <RoomMap />
   <Tabs {items} />
 </main>
 
 <style>
-:global(*),
-:global(*::before),
-:global(*::after) {
+  :global(*),
+  :global(*::before),
+  :global(*::after) {
     box-sizing: border-box;
   }
   main {

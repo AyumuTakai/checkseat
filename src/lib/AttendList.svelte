@@ -1,28 +1,70 @@
 <script lang="ts">
-    const entries = [
-        {no:1},
-        {no:2},
-        {no:3},
-        {no:4},
-        {no:5},
-        {no:6},
-        {no:7},
-        {no:8},
-        {no:9},
-        {no:10},
-        {no:11},
-        {no:12},
-        {no:13},
-        {no:14},
-        {no:15},
-        {no:40}
-    ]
-    const timetabels = [
-        {"title":"19:00〜19:45"},
-        {"title":"19:45〜20:30"},
-        {"title":"20:30〜21:15"}
-    ]
+    import { onMount } from "svelte";
+    import { currentRoom, type Action } from "../roomStore";
+
+    const marks = ["x", "/", "○"];
+
+    let today:Date;
+
+    const inTime = (no:number,begin:number,end:number,events:Action[])=>{
+        // eventのリストを線分に分ける
+        const lines = [];
+        let line;
+        for (const ev of events) {
+            if(ev.action == "active") {
+                line = {begin:ev.datetime.getHours()*100+ev.datetime.getMinutes(),end:2400}
+                lines.push(line);
+            }else if(ev.action == "not active") {
+                line.end = ev.datetime.getHours()*100+ev.datetime.getMinutes();
+            }
+        }
+        console.log({no,begin,end,lines});
+        return 
+    }
+
+    const checkAttend = (no: number, begin: number, end: number) => {
+        today = new Date();
+        const events = $currentRoom.events.filter((ev) => {
+            return ev.no == no && ev.datetime.getDay() == today.getDay();
+        });
+        inTime(no,begin,end,events);
+
+        return 1;
+    };
+
+    const mark = (idx: number) => {
+        return marks[idx];
+    };
+
+    onMount(()=>{
+
+    });
 </script>
+
+<section>
+    {#if $currentRoom}
+        <table>
+            <tr>
+                <th>no</th>
+                {#each $currentRoom.timetables as time}
+                    <th>{time.title}</th>
+                {/each}
+            </tr>
+            {#each $currentRoom.sheats as sheat}
+                <tr>
+                    <th>{sheat.no}</th>
+                    {#each $currentRoom.timetables as time}
+                        <td
+                            >{mark(
+                                checkAttend(sheat.no, time.begin, time.end)
+                            )}</td
+                        >
+                    {/each}
+                </tr>
+            {/each}
+        </table>
+    {/if}
+</section>
 
 <style>
     section {
@@ -36,26 +78,8 @@
         border-spacing: 0;
         margin: 0;
     }
-    th,td {
+    th,
+    td {
         border: solid 1px gray;
     }
 </style>
-
-<section>
-    <table>
-        <tr>
-            <th>no</th>
-            {#each timetabels as time}
-                <th>{time.title}</th>
-            {/each}
-        </tr>
-        {#each entries as entry}
-        <tr>
-            <th>{entry.no}</th>
-            {#each timetabels as time}
-            <td></td>
-            {/each}
-        </tr>            
-        {/each}
-    </table>
-</section>

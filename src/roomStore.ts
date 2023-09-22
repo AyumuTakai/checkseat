@@ -1,13 +1,27 @@
 import { writable } from "svelte/store";
-import type { Action } from "./eventStore";
+
+export type Action = {
+    datetime:Date;
+    no:number;
+    action:string;
+    msg?:string;
+}
+
+export type AttendLine = {
+    no:number,
+    begin:number,
+    end:number
+}
 
 export type Room = {
     name:string;
     furnitures:any[];
     sheats:any[];
     events:Action[];
+    timetables?:any[];
+    attends:AttendLine[];
 }
-
+export const currentRoom = writable<Room>();
 export const rooms = writable<Room[]>([
     {
         name:"295",
@@ -52,8 +66,14 @@ export const rooms = writable<Room[]>([
             { cx: 820, cy: 110, no: 14 },
             { cx: 110, cy: 30, no: 40 },    
         ],
+        timetables:[
+            {"title":"19:00〜19:45",begin:1900,end:1945},
+            {"title":"19:45〜20:30",begin:1945,end:2030},
+            {"title":"20:30〜21:15",begin:2030,end:2115}
+        ],
         events:[
 
-        ]
+        ],
+        attends:[]
     }
 ]);

@@ -1,11 +1,14 @@
 <script lang="ts">
-    import { events } from "../eventStore";
+    import { currentRoom } from "../roomStore";
 </script>
 
 <div>
     <ul>
-        {#each $events as event}
-            <li>{event.datetime.toLocaleDateString()} {event.datetime.toLocaleTimeString()} [{event.no}] {event.action}</li>
+        {#each $currentRoom.events as event}
+            <li>
+                {event.datetime.toLocaleDateString()}
+                {event.datetime.toLocaleTimeString()} [{event.no}] {event.action}
+            </li>
         {/each}
     </ul>
 </div>
@@ -18,6 +21,7 @@
         border: solid 10px #ccc;
     }
     li {
+        color:black;
         list-style: none;
     }
 </style>

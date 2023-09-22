@@ -1,38 +1,41 @@
 <script lang="ts">
-    import type { Room } from "../roomStore";
+    import { currentRoom } from "../roomStore";
     import Furniture from "./Furniture.svelte";
     import Sheat from "./Sheat.svelte";
-
-    export let room:Room;
 
     const activeColor = "red";
     const nonActiveColor = "white";
 </script>
 
 <section>
-    <svg
-        xmlns="http://www.w3.org/2000/svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink"
-        version="1.1"
-        width="1200px"
-        height="600px"
-        viewBox="0 0 1150 600"
-    >
-        <g>
-            {#each room.furnitures as f}
-                <Furniture
-                    x={f.x}
-                    y={f.y}
-                    width={f.width}
-                    height={f.height}
-                    text={f.text}
-                />
-            {/each}
-            {#each room.sheats as s}
-                <Sheat cx={s.cx} cy={s.cy} no={s.no} />
-            {/each}
-        </g>
-    </svg>
+    {#if $currentRoom}
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="1.1"
+            width="1200px"
+            height="600px"
+            viewBox="0 0 1150 600"
+        >
+            <g>
+                {#each $currentRoom.furnitures as f}
+                    {f}
+                    <Furniture
+                        x={f.x}
+                        y={f.y}
+                        width={f.width}
+                        height={f.height}
+                        text={f.text}
+                    />
+                {/each}
+                {#each $currentRoom.sheats as s}
+                    <Sheat cx={s.cx} cy={s.cy} no={s.no} />
+                {/each}
+            </g>
+        </svg>
+    {:else}
+        <p>No Data</p>
+    {/if}
 </section>
 
 <style>
