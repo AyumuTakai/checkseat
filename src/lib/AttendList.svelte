@@ -70,6 +70,7 @@
     section {
         background-color: white;
         overflow: scroll;
+        color:black;
     }
     table {
         border: solid 1px black;
