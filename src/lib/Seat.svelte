@@ -9,20 +9,17 @@
 
     let attend: AttendLine | undefined;
 
-    const activeColor = "red";
-    const nonActiveColor = "white";
-
     const writeLog = (msg: string) => {
         currentRoom.update((room: Room) => {
             const now = new Date();
-            if( ! attend ) {
+            if (!attend) {
                 attend = {
                     no,
                     begin: now.getHours() * 100 + now.getMinutes(),
-                    end: 2400
-                }
+                    end: 2400,
+                };
                 room.attends.push(attend);
-            }else{
+            } else {
                 attend.end = now.getHours() * 100 + now.getMinutes();
                 attend = undefined;
             }
@@ -38,11 +35,11 @@
 
     const onClickHandler = (e: Event) => {
         // const el = e.target as SVGEllipseElement;
-        if (el.style.fill == activeColor) {
-            el.style.fill = nonActiveColor;
+        if (el.style.fill == "var(--activeColor)") {
+            el.style.fill = "var(--nonActiveColor)";
             writeLog("non active");
         } else {
-            el.style.fill = activeColor;
+            el.style.fill = "var(--activeColor)";
             writeLog("active");
         }
     };
@@ -54,7 +51,6 @@
     {cy}
     rx="20"
     ry="20"
-    stroke="rgb(0, 0, 0)"
     pointer-events="all"
     on:click={onClickHandler}
     bind:this={el}
@@ -70,10 +66,32 @@
 
 <style>
     ellipse {
+        --activeColor: lightgreen;
+        --nonActiveColor: white;
         fill: white;
+        stroke: black;
+    }
+    text {
+        stroke: gray;
     }
     text,
     ellipse {
         cursor: pointer;
+    }
+    @media (prefers-color-scheme: dark) {
+        ellipse {
+            --activeColor: orange;
+            --nonActiveColor: black;
+            fill: black;
+            stroke: white;
+        }
+        text {
+            stroke-width: 3;
+            stroke: black;
+            fill: white;
+            paint-order: stroke;
+            font-weight: bold;
+            stroke-linejoin: round;
+        }
     }
 </style>

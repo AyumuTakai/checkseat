@@ -52,6 +52,18 @@
     svg {
         width: 100%;
         height: 100%;
-        background-color: white;
+        fill: white;
+    }
+    @media(prefers-color-scheme: dark) {
+        :global(body) {
+            background-color: black;
+        }
+        section {
+            background-color: black;
+        }
+        svg {
+            fill: black;
+            stroke: white;
+        }
     }
 </style>
