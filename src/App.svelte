@@ -5,6 +5,7 @@
   import RoomMap from "./lib/RoomMap.svelte";
   import Tabs from "./lib/Tabs.svelte";
   import { currentRoom, rooms } from "./roomStore";
+    import RoomEditor from "./lib/RoomEditor.svelte";
 
   const items = [
     {
@@ -17,6 +18,11 @@
       value: 2,
       component: EventList,
     },
+    {
+      label: "Edit",
+      value: 3,
+      component: RoomEditor,
+    }
   ];
 
   onMount(() => {

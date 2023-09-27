@@ -1,7 +1,7 @@
 <script lang="ts">
     import { currentRoom } from "../roomStore";
     import Furniture from "./Furniture.svelte";
-    import Sheat from "./Sheat.svelte";
+    import Seat from "./Seat.svelte";
 
     const activeColor = "red";
     const nonActiveColor = "white";
@@ -28,8 +28,8 @@
                         text={f.text}
                     />
                 {/each}
-                {#each $currentRoom.sheats as s}
-                    <Sheat cx={s.cx} cy={s.cy} no={s.no} />
+                {#each $currentRoom.seats as s}
+                    <Seat cx={s.cx} cy={s.cy} no={s.no} />
                 {/each}
             </g>
         </svg>

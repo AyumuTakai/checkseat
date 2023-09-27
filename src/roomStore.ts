@@ -17,7 +17,7 @@ export type AttendLine = {
 export type Room = {
     name: string;
     furnitures: any[];
-    sheats: any[];
+    seats: any[];
     events: Action[];
     timetables?: any[];
     attends: AttendLine[];
@@ -50,7 +50,7 @@ export const rooms = writable<Room[]>([
 
             { x: 480, y: 540, width: 220, height: 60, text: "教卓" },
         ],
-        sheats: [
+        seats: [
             { cx: 110, cy: 384, no: 1 },
             { cx: 360, cy: 384, no: 2 },
             { cx: 580, cy: 384, no: 3 },

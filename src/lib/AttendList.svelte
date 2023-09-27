@@ -50,13 +50,13 @@
                     <th>{time.title}</th>
                 {/each}
             </tr>
-            {#each $currentRoom.sheats as sheat}
+            {#each $currentRoom.seats as seat}
                 <tr>
-                    <th>{sheat.no}</th>
+                    <th>{seat.no}</th>
                     {#each $currentRoom.timetables as time}
                         <td
                             >{mark(
-                                checkAttend(sheat.no, time.begin, time.end)
+                                checkAttend(seat.no, time.begin, time.end)
                             )}</td
                         >
                     {/each}
