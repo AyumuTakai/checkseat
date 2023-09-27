@@ -83,4 +83,11 @@
     td {
         border: solid 1px gray;
     }
+    @media(prefers-color-scheme: dark) {
+        th,td {
+            background-color: black;
+            color: white;
+            border-color: white;
+        }
+    }
 </style>

@@ -61,4 +61,14 @@
     background-color: #fff;
     border-color: #dee2e6 #dee2e6 #fff;
   }
+  @media (prefers-color-scheme: dark) {
+    .box,
+    li.active > span {
+      background-color: black;
+      color: white;
+    }
+    ul {
+      border-bottom: black;
+    }
+  }
 </style>

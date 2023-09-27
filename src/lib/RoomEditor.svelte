@@ -99,4 +99,13 @@
         line-height: 1em;
         vertical-align: middle;
     }
+    @media(prefers-color-scheme: dark) {
+        section,table {
+            background-color: black;
+            color:white;
+        }
+        table {
+            border-color: white;
+        }
+    }
 </style>

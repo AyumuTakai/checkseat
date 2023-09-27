@@ -65,19 +65,27 @@
         height: 100%;
         border: none;
         text-align: center;
+        border-radius: unset;
     }
+
     .buttons {
         display: flex;
         column-gap: 0.2em;
     }
     button {
         width: 1em;
-        height: 1em;
+        height: 100%;
         padding: 0;
         background-color: gray;
         color: white;
         border-radius: 0.1em;
         line-height: 1em;
         vertical-align: middle;
+    }
+    @media(prefers-color-scheme: dark) {
+        td,input,button {
+            background-color: black;
+            color: white;
+        }
     }
 </style>

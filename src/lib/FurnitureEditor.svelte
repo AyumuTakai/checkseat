@@ -60,4 +60,10 @@
         line-height: 1em;
         vertical-align: middle;
     }
+    @media(prefers-color-scheme: dark) {
+        td,input,button {
+            background-color: black;
+            color: white;
+        }
+    }
 </style>
