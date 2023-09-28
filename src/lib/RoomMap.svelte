@@ -3,11 +3,13 @@
     import Furniture from "./Furniture.svelte";
     import Seat from "./Seat.svelte";
 
+    export let _class:string;
+
     const activeColor = "red";
     const nonActiveColor = "white";
 </script>
 
-<section>
+<section class={_class}>
     {#if $currentRoom}
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -39,16 +41,6 @@
 </section>
 
 <style>
-    :global(body) {
-        background-color: #ccc;
-    }
-    section {
-        width: 100%;
-        height: 100%;
-        padding: 8px;
-        background-color: white;
-        object-fit: contain;
-    }
     svg {
         width: 100%;
         height: 100%;

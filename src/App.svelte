@@ -5,7 +5,7 @@
   import RoomMap from "./lib/RoomMap.svelte";
   import Tabs from "./lib/Tabs.svelte";
   import { currentRoom, rooms } from "./roomStore";
-    import RoomEditor from "./lib/RoomEditor.svelte";
+  import RoomEditor from "./lib/RoomEditor.svelte";
 
   const items = [
     {
@@ -22,7 +22,7 @@
       label: "Edit",
       value: 3,
       component: RoomEditor,
-    }
+    },
   ];
 
   onMount(() => {
@@ -31,8 +31,8 @@
 </script>
 
 <main>
-  <RoomMap />
-  <Tabs {items} />
+  <RoomMap _class="halfheight" />
+  <Tabs _class="halfheight" {items} />
 </main>
 
 <style>
@@ -51,5 +51,10 @@
     margin: 0;
     display: flex;
     flex-direction: column;
+  }
+  main :global(.halfheight) {
+    height: 50vh;
+    width: 100%;
+    object-fit: contain;
   }
 </style>

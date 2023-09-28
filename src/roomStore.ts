@@ -89,17 +89,17 @@ export class Attends {
      * @param {number} no 出席番号
      * @param {Date} [now = new Date() ] 現在時刻 
      */
-    public active(no: any, now: Date=new Date()) {
+    public active(no: any, now: Date = new Date()) {
         const end = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59);
         let attend;
-        if( ! this.list[no]) {
+        if (!this.list[no]) {
             this.list[no] = [] as Attend[];
             attend = new Attend(no, now, end);
-            this.list[no].push(attend);            
-        }else if((now.getTime() - this.list[no].at(-1).end.getTime()) >= 1000 * 60){
+            this.list[no].push(attend);
+        } else if ((now.getTime() - this.list[no].at(-1).end.getTime()) >= 1000 * 60) {
             attend = new Attend(no, now, end);
-            this.list[no].push(attend);            
-        }else{
+            this.list[no].push(attend);
+        } else {
             // 退席してから1分未満に出席にした場合は操作ミスとして前の出席と結合
             // 終了時間を戻す
             attend = this.list[no].at(-1);
@@ -114,14 +114,14 @@ export class Attends {
      */
     public inactive(no: any, now: Date = new Date()) {
         const list = this.get(no);
-        if(list){
+        if (list) {
             const attend = list.at(-1);
-            if(attend.begin.getTime() > now.getTime()) {
+            if (attend.begin.getTime() > now.getTime()) {
                 throw new AttendTimeError("Invalid Time");
             }
             attend.end = now;
             return attend;
-        }else{
+        } else {
             throw new AttendInvalidActionError("Invalid action");
         }
     }
@@ -131,7 +131,7 @@ export class Attends {
      * @param {number} no 出席番号 
      * @returns Attendの配列
      */
-    public get(no: number):Attend[]|undefined {
+    public get(no: number): Attend[] | undefined {
         return this.list[no];
     }
 }
