@@ -67,8 +67,21 @@
       background-color: black;
       color: white;
     }
+    .box {
+      border: 1px solid black;
+    }
     ul {
       border-bottom: black;
+      background-color: #333;
     }
+    li {
+      color:#888;
+    }
+    li.active > span {
+      border-color: #555 #555 black; 
+    }
+    span:hover {
+    border-color: #555 #555 black;
+  }
   }
 </style>
