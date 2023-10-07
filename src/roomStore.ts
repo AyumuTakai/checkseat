@@ -1,5 +1,5 @@
 import { writable } from "svelte/store";
-import type { Action, AttendLine } from "./attendStore";
+import type { AttendLine } from "./attendStore";
 
 /**
  * 教室設定
@@ -9,8 +9,6 @@ export type Room = {
     furnitures: any[];
     seats: any[];
     timetables?: any[];
-
-    events: Action[];
     attends: AttendLine[];
 }
 /**
@@ -68,9 +66,6 @@ export const rooms = writable<Room[]>([
             { "title": "19:00〜19:45", begin: 1900, end: 1945 },
             { "title": "19:45〜20:30", begin: 1945, end: 2030 },
             { "title": "20:30〜21:15", begin: 2030, end: 2115 }
-        ],
-        events: [
-
         ],
         attends: []
     }
