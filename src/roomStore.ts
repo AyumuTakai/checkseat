@@ -1,12 +1,9 @@
 import { writable } from "svelte/store";
 import type { Action, AttendLine } from "./attendStore";
 
-
-
-
-
-
-
+/**
+ * 教室設定
+ */
 export type Room = {
     name: string;
     furnitures: any[];
@@ -16,7 +13,13 @@ export type Room = {
     events: Action[];
     attends: AttendLine[];
 }
+/**
+ * 操作対象教室
+ */
 export const currentRoom = writable<Room>();
+/**
+ * 教室設定リスト
+ */
 export const rooms = writable<Room[]>([
     {
         name: "295",

@@ -1,4 +1,5 @@
 import { AttendTimeError, AttendInvalidActionError } from "./errors";
+export { AttendInvalidActionError };
 
 /**
  * 出席状態
@@ -61,11 +62,11 @@ export class ClassSetting {
     ealyLimit: number;
     /**
      * コンストラクタ
-     * @param room 
-     * @param begin 
-     * @param end 
-     * @param lateLimit 
-     * @param ealyLimit 
+     * @param {string} room 教室名
+     * @param {number} begin 開始時刻 (HHMM)
+     * @param {number} end 終了時刻 (HHMM)
+     * @param {number} lateLimit 遅刻限度 (分)
+     * @param {number} ealyLimit 早退限度 (分)
      */
     constructor(room: string, begin: number, end: number, lateLimit: number, ealyLimit: number) {
         this.room = room;
@@ -83,22 +84,30 @@ export class ClassSetting {
      * @returns {ClassTerm} 授業時間オブジェクト
      */
     createClassTerm(date: Date = new Date()) {
+        // 開始日時
         const begin = new Date(date.getTime());
         begin.setHours(this.beginHours);
         begin.setMinutes(this.beginMinutes);
         begin.setSeconds(0, 0);
+        // 遅刻期限日時
+        const lateLimit = new Date(begin.getTime());
+        lateLimit.setMinutes(lateLimit.getMinutes() + this.lateLimit);
+        // 終了日時
         const end = new Date(date.getTime());
         end.setHours(this.endHours);
         end.setMinutes(this.endMinutes);
         end.setSeconds(0, 0);
-        const lateLimit = new Date(begin.getTime());
-        lateLimit.setMinutes(lateLimit.getMinutes() + this.lateLimit);
+        // 早退期限日時
         const ealyLimit = new Date(end.getTime());
         ealyLimit.setMinutes(ealyLimit.getMinutes() - this.ealyLimit);
+
         return new ClassTerm(begin, end, lateLimit, ealyLimit);
     }
 }
 
+/**
+ * 出席操作記録
+ */
 export type Action = {
     datetime: Date;
     no: number;
@@ -112,6 +121,9 @@ export type AttendLine = {
     end: number
 }
 
+/**
+ * 出席記録クラス
+ */
 export class Attend extends Term {
     no: number;
     constructor(no: number, begin: Date, end: Date) {
@@ -120,8 +132,9 @@ export class Attend extends Term {
     }
 }
 
-export { AttendInvalidActionError };
-
+/**
+ * 出席リストクラス
+ */
 export class Attends {
     private list: { [no: number]: Attend[] };
     constructor(list: { [no: number]: Attend[] } = {}) {

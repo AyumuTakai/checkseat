@@ -1,5 +1,5 @@
 import { assert } from "vitest";
-import { Attend, AttendType, Attends, ClassSetting, ClassTerm } from "./attendStore";
+import { AttendType, Attends, ClassSetting, ClassTerm } from "./attendStore";
 import { AttendInvalidActionError, AttendTimeError } from "./errors";
 
 describe('出席/退席', () => {
@@ -171,7 +171,7 @@ describe('クラス設定', () => {
         const no = 1;
         attends.active(no,new Date(2023, 8, 27, begin[0], begin[1], 0));
         const attend = attends.inactive(no,new Date(2023, 8, 27, end[0], end[1], 0));
-        console.log({classTerm,attend});
-        expect(attends.confirm(no,classTerm)).toBe(expected)
+        // console.log({classTerm,attend});
+        expect(attends.confirm(no,classTerm)).toBe(expected);
       });
 });
