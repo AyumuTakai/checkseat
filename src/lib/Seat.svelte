@@ -1,5 +1,7 @@
 <script lang="ts">
-    import { currentRoom, type AttendLine, type Room } from "../roomStore";
+    import { currentRoom, type Room } from "../roomStore";
+    import { type AttendLine } from "../attendStore";
+    import { addLog } from "../actionStore";
 
     export let no: number = 0;
     export let cx: number = 0;
@@ -10,25 +12,27 @@
     let attend: AttendLine | undefined;
 
     const writeLog = (msg: string) => {
+        const now = new Date();
+        // 操作ログに追加
+        addLog({
+            room: $currentRoom.name,
+            datetime: now,
+            no,
+            action: msg,
+        });
+        // 出席記録を更新
         currentRoom.update((room: Room) => {
-            const now = new Date();
-            if (!attend) {
-                attend = {
-                    no,
-                    begin: now.getHours() * 100 + now.getMinutes(),
-                    end: 2400,
-                };
-                room.attends.push(attend);
-            } else {
-                attend.end = now.getHours() * 100 + now.getMinutes();
-                attend = undefined;
-            }
-            console.log(no, msg, new Date().toLocaleTimeString());
-            room.events.push({
-                datetime: new Date(),
-                no: no,
-                action: msg,
-            });
+            // if (!attend) {
+            //     attend = {
+            //         no,
+            //         begin: now.getHours() * 100 + now.getMinutes(),
+            //         end: 2400,
+            //     };
+            //     room.attends.push(attend);
+            // } else {
+            //     attend.end = now.getHours() * 100 + now.getMinutes();
+            //     attend = undefined;
+            // }
             return room;
         });
     };

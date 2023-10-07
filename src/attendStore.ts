@@ -105,16 +105,6 @@ export class ClassSetting {
     }
 }
 
-/**
- * 出席操作記録
- */
-export type Action = {
-    datetime: Date;
-    no: number;
-    action: string;
-    msg?: string;
-}
-
 export type AttendLine = {
     no: number,
     begin: number,

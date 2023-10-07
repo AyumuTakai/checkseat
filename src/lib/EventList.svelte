@@ -1,13 +1,13 @@
 <script lang="ts">
-    import { currentRoom } from "../roomStore";
+    import { actionLog } from "../actionStore";
 </script>
 
 <section>
     <ul>
-        {#each $currentRoom.events as event}
+        {#each $actionLog as event}
             <li>
                 {event.datetime.toLocaleDateString()}
-                {event.datetime.toLocaleTimeString()} [{event.no}] {event.action}
+                {event.datetime.toLocaleTimeString()} R:{event.room} [{event.no}] {event.action}
             </li>
         {/each}
     </ul>
