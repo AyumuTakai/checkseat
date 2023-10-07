@@ -1,5 +1,5 @@
 import { assert } from "vitest";
-import { Attend, AttendType, Attends, ClassSetting, ClassTerm } from "./roomStore";
+import { Attend, AttendType, Attends, ClassSetting, ClassTerm } from "./attendStore";
 import { AttendInvalidActionError, AttendTimeError } from "./errors";
 
 describe('出席/退席', () => {
@@ -150,4 +150,28 @@ describe('クラス設定', () => {
         assert.equal(attends.confirm(no2, classTerm), AttendType.Absent);
 
     });
+    test.each([
+        [[10,11], [10,39], AttendType.Absent], // 欠席
+        [[10,0], [11,0], AttendType.Attend], // 出席
+        [[10,9], [11,0], AttendType.Late], // 遅刻
+        [[10,0], [10,40], AttendType.Early], // 早退
+        [[10,9], [10,40], AttendType.Late | AttendType.Early], // 遅刻 | 早退
+
+
+        [[11,11], [12,0], AttendType.Absent], // 欠席
+        [[9,0], [9,30], AttendType.Absent], // 欠席
+
+    ])('パターンテスト(%o - %o => %i)', (begin, end, expected) => {
+        // 授業設定:10:00から11:00まで。10:10までは遅刻,10:40以降は早退
+        const setting = new ClassSetting('101', 1000, 1100, 10, 20);
+        const today = new Date(2023, 8, 27, 0, 0, 0);
+        const classTerm = setting.createClassTerm(today);
+
+        const attends = new Attends();
+        const no = 1;
+        attends.active(no,new Date(2023, 8, 27, begin[0], begin[1], 0));
+        const attend = attends.inactive(no,new Date(2023, 8, 27, end[0], end[1], 0));
+        console.log({classTerm,attend});
+        expect(attends.confirm(no,classTerm)).toBe(expected)
+      });
 });
