@@ -2,25 +2,26 @@
     import { createEventDispatcher } from "svelte";
     import { editingObject } from "../roomStore";
 
-    const distpacher = createEventDispatcher();
     export let furniture;
+
+    const distpacher = createEventDispatcher();
 
     const selectHandler = () => {
         editingObject.set(furniture);
     };
 </script>
 
-<tr class={$editingObject === furniture ? "selected":""}>
+<tr class={$editingObject === furniture ? "selected" : ""}>
     <td
         ><input
             type="number"
             value={furniture.x}
+            size="4"
             on:focus={selectHandler}
             on:change={(ev) => {
                 furniture.x = parseInt(ev.currentTarget.value);
                 distpacher("update", { furniture });
             }}
-            size="4"
         /></td
     >
     <td
@@ -71,8 +72,7 @@
         /></td
     >
     <td class="buttons">
-        <button>+</button>
-        <button>-</button>
+        <button></button>
     </td>
 </tr>
 
