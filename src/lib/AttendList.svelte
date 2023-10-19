@@ -1,6 +1,7 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import { currentRoom, type Action } from "../roomStore";
+    import { currentRoom } from "../roomStore";
+    import type { Action } from "../actionStore";
 
     const marks = ["x", "/", "○"];
 
@@ -23,11 +24,11 @@
     }
 
     const checkAttend = (no: number, begin: number, end: number) => {
-        today = new Date();
-        const events = $currentRoom.events.filter((ev) => {
-            return ev.no == no && ev.datetime.getDay() == today.getDay();
-        });
-        inTime(no,begin,end,events);
+        // today = new Date();
+        // const events = $currentRoom.events.filter((ev) => {
+        //     return ev.no == no && ev.datetime.getDay() == today.getDay();
+        // });
+        // inTime(no,begin,end,events);
 
         return 1;
     };

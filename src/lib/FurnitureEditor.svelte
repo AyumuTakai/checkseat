@@ -1,39 +1,85 @@
 <script lang="ts">
     import { createEventDispatcher } from "svelte";
+    import { editingObject } from "../roomStore";
 
     const distpacher = createEventDispatcher();
     export let furniture;
+
+    const selectHandler = () => {
+        editingObject.set(furniture);
+    };
 </script>
 
-<tr>
-    <td><input type="number" value="{furniture.x}" on:change={(ev)=>{
-        furniture.x = parseInt(ev.currentTarget.value);
-        distpacher("update",{furniture});
-    }} size="4" /></td>
-    <td><input type="number" value="{furniture.y}" size="4" on:change={(ev)=>{
-        furniture.y = parseInt(ev.currentTarget.value);
-        distpacher("update",{furniture});
-    }} /></td>
-    <td><input type="number" value="{furniture.width}" size="4" on:change={(ev)=>{
-        furniture.width = parseInt(ev.currentTarget.value);
-        distpacher("update",{furniture});
-    }} /></td>
-    <td><input type="number" value="{furniture.height}" size="4" on:change={(ev)=>{
-        furniture.height = parseInt(ev.currentTarget.value);
-        distpacher("update",{furniture});
-    }} /></td>
-    <td><input type="text" value="{furniture.text}" on:input={(ev)=>{
-        furniture.text = ev.currentTarget.value;
-        distpacher("update",{furniture});
-    }}/></td>
+<tr class={$editingObject === furniture ? "selected":""}>
+    <td
+        ><input
+            type="number"
+            value={furniture.x}
+            on:focus={selectHandler}
+            on:change={(ev) => {
+                furniture.x = parseInt(ev.currentTarget.value);
+                distpacher("update", { furniture });
+            }}
+            size="4"
+        /></td
+    >
+    <td
+        ><input
+            type="number"
+            value={furniture.y}
+            size="4"
+            on:focus={selectHandler}
+            on:change={(ev) => {
+                furniture.y = parseInt(ev.currentTarget.value);
+                distpacher("update", { furniture });
+            }}
+        /></td
+    >
+    <td
+        ><input
+            type="number"
+            value={furniture.width}
+            size="4"
+            on:focus={selectHandler}
+            on:change={(ev) => {
+                furniture.width = parseInt(ev.currentTarget.value);
+                distpacher("update", { furniture });
+            }}
+        /></td
+    >
+    <td
+        ><input
+            type="number"
+            value={furniture.height}
+            size="4"
+            on:focus={selectHandler}
+            on:change={(ev) => {
+                furniture.height = parseInt(ev.currentTarget.value);
+                distpacher("update", { furniture });
+            }}
+        /></td
+    >
+    <td
+        ><input
+            type="text"
+            value={furniture.text}
+            on:focus={selectHandler}
+            on:input={(ev) => {
+                furniture.text = ev.currentTarget.value;
+                distpacher("update", { furniture });
+            }}
+        /></td
+    >
     <td class="buttons">
         <button>+</button>
         <button>-</button>
     </td>
-</tr>        
-
+</tr>
 
 <style>
+    tr.selected {
+        background-color: orange;
+    }
     td {
         border: solid 1px gray;
         padding: 0;
@@ -55,13 +101,15 @@
         height: 1em;
         padding: 0;
         background-color: gray;
-        color:white;
+        color: white;
         border-radius: 0.1em;
         line-height: 1em;
         vertical-align: middle;
     }
-    @media(prefers-color-scheme: dark) {
-        td,input,button {
+    @media (prefers-color-scheme: dark) {
+        td,
+        input,
+        button {
             background-color: black;
             color: white;
         }

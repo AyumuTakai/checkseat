@@ -1,15 +1,13 @@
 <script lang="ts">
     import { currentRoom, type Room } from "../roomStore";
-    import { type AttendLine } from "../attendStore";
     import { addLog } from "../actionStore";
+    import { attends,Attendees } from "../attendStore";
 
     export let no: number = 0;
     export let cx: number = 0;
     export let cy: number = 0;
 
     let el: SVGEllipseElement;
-
-    let attend: AttendLine | undefined;
 
     const writeLog = (msg: string) => {
         const now = new Date();
@@ -21,6 +19,14 @@
             action: msg,
         });
         // 出席記録を更新
+        attends.update((att:Attendees)=>{
+            if(msg == 'active') {
+                att.get(no).inactive(now);
+            }else{
+                att.get(no).active(now);
+            }
+            return att;
+        });
         currentRoom.update((room: Room) => {
             // if (!attend) {
             //     attend = {

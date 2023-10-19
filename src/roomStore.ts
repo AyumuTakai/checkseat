@@ -1,5 +1,6 @@
 import { writable } from "svelte/store";
-import type { AttendLine } from "./attendStore";
+import Furniture from "./lib/Furniture.svelte";
+import Seat from "./lib/Seat.svelte";
 
 /**
  * 教室設定
@@ -9,12 +10,16 @@ export type Room = {
     furnitures: any[];
     seats: any[];
     timetables?: any[];
-    attends: AttendLine[];
 }
 /**
  * 操作対象教室
  */
 export const currentRoom = writable<Room>();
+/**
+ * 編集対象
+ * 値が設定されていたら編集モードと判断する
+ */
+export const editingObject = writable<Furniture|Seat>();
 /**
  * 教室設定リスト
  */
@@ -67,7 +72,7 @@ export const rooms = writable<Room[]>([
             { "title": "19:45〜20:30", begin: 1945, end: 2030 },
             { "title": "20:30〜21:15", begin: 2030, end: 2115 }
         ],
-        attends: []
+        // attends: []
     }
 ]);
 

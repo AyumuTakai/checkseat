@@ -1,5 +1,8 @@
+import { writable } from "svelte/store";
 import { AttendTimeError, AttendInvalidActionError } from "./errors";
 export { AttendInvalidActionError };
+
+
 
 /**
  * 出席状態
@@ -105,93 +108,85 @@ export class ClassSetting {
     }
 }
 
-export type AttendLine = {
-    no: number,
-    begin: number,
-    end: number
-}
-
 /**
  * 出席記録クラス
  */
 export class Attend extends Term {
+    room: string;
     no: number;
-    constructor(no: number, begin: Date, end: Date) {
+    constructor(room: string, no: number, begin: Date, end: Date) {
         super(begin, end);
+        this.room = room;
         this.no = no;
     }
 }
 
 /**
- * 出席リストクラス
+ * 参加者クラス
  */
-export class Attends {
-    private list: { [no: number]: Attend[] };
-    constructor(list: { [no: number]: Attend[] } = {}) {
-        this.list = list;
+export class Attendee {
+    room: string;
+    no: number;
+    attends: Attend[];
+    /**
+     * コンストラクタ
+     * @param no 
+     * @param attends 
+     */
+    constructor(room: string, no: number, attends = []) {
+        this.no = no;
+        this.attends = attends;
     }
+
     /**
      * 出席
-     * @param {number} no 出席番号
      * @param {Date} [now = new Date() ] 現在時刻 
      */
-    public active(no: any, now: Date = new Date()) {
+    public active(now: Date = new Date()) {
         const end = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59);
         let attend;
-        if (!this.list[no]) {
-            this.list[no] = [] as Attend[];
-            attend = new Attend(no, now, end);
-            this.list[no].push(attend);
-        } else if ((now.getTime() - this.list[no].at(-1).end.getTime()) >= 1000 * 60) {
-            attend = new Attend(no, now, end);
-            this.list[no].push(attend);
+        if (this.attends.length == 0) {
+            // 初回の出席
+            attend = new Attend(this.room, this.no, now, end);
+            this.attends.push(attend);
+        } else if ((now.getTime() - this.attends.at(-1).end.getTime()) >= 1000 * 60) {
+            // 新しい出席
+            attend = new Attend(this.room, this.no, now, end);
+            this.attends.push(attend);
         } else {
             // 退席してから1分未満に出席にした場合は操作ミスとして前の出席と結合
             // 終了時間を戻す
-            attend = this.list[no].at(-1);
+            attend = this.attends.at(-1);
             attend.end = end;
         }
         return attend;
     }
     /**
      * 退席
-     * @param {number} no 出席番号
-     * @param {Date} [now = new Date() ] 現在時刻 
+     * @param {Date} [now = new Date() ] 退席時刻 
+     * @throws {AttendTimeError} 時刻指定が出席時刻より前
+     * @throws {AttendInvalidActionError} 出席していない
      */
-    public inactive(no: any, now: Date = new Date()) {
-        const list = this.get(no);
-        if (list) {
-            const attend = list.at(-1);
-            if (attend.begin.getTime() > now.getTime()) {
-                throw new AttendTimeError("Invalid Time");
-            }
-            attend.end = now;
-            return attend;
-        } else {
+    public inactive(now: Date = new Date()): Attend {
+        const attend = this.attends.at(-1);
+        if (!attend) {
             throw new AttendInvalidActionError("Invalid action");
         }
+        if (attend.begin.getTime() > now.getTime()) {
+            throw new AttendTimeError("Invalid end time");
+        }
+        attend.end = now;
+        return attend;
     }
-
     /**
-     * 出席リストの取得
-     * @param {number} no 出席番号 
-     * @returns Attendの配列
-     */
-    public get(no: number): Attend[] | undefined {
-        return this.list[no];
-    }
-
-    /**
-     * 出席状態の判定
-     * @param {number} no 出席番号
-     * @param {ClassTerm} classTerm 授業時間 
-     * @returns {number} 欠席:0| 出席:1 | 遅刻:2 | 早退:4
-     */
-    public confirm(no: number, classTerm: ClassTerm) {
-        const list = this.get(no);
-        if (list) {
+* 出席状態の判定
+* @param {ClassTerm} classTerm 授業時間 
+* @returns {number} 欠席:0| 出席:1 | 遅刻:2 | 早退:4
+*/
+    public confirm(classTerm: ClassTerm) {
+        if (this.attends) {
             // 出席した記録があれば出席
-            const attend = list.filter((attend) => {
+            const attend = this.attends.filter((attend) => {
                 return attend.begin <= classTerm.begin && classTerm.end <= attend.end;
             });
             if (attend.length > 0) {
@@ -200,14 +195,14 @@ export class Attends {
             // 出席していない場合の初期値は欠席とし、遅刻/早退のチェックを行なう
             let attendType = AttendType.Absent;
             // 遅刻
-            const late = list.filter((attend) => {
+            const late = this.attends.filter((attend) => {
                 return classTerm.begin < attend.begin && attend.begin <= classTerm.lateLimit;
             });
             if (late.length > 0) {
                 attendType += AttendType.Late;
             }
             // 早退
-            const ealry = list.filter((attend) => {
+            const ealry = this.attends.filter((attend) => {
                 return classTerm.ealyLimit <= attend.end && attend.end < classTerm.end;
             });
             if (ealry.length > 0) {
@@ -219,6 +214,51 @@ export class Attends {
             return AttendType.Absent;
         }
     }
+
+    /**
+     * 出席回数
+     */
+    get length() {
+        return this.attends.length;
+    }
+
+    /**
+     * 出席情報の取得
+     * @param index インデックス
+     * @returns 
+     */
+    public get(index: number) {
+        return this.attends[index];
+    }
+}
+
+/**
+ * 出席者リストクラス
+ */
+export class Attendees {
+    private room: string;
+    private list: { [no: number]: Attendee };
+    /**
+     * コンストラクタ
+     * @param {[no: number]: Attend[]} list 出席情報のリスト
+     */
+    constructor(list: { [no: number]: Attendee } = {}) {
+        this.room = "";
+        this.list = list;
+    }
+
+    /**
+     * 出席リストの取得
+     * @param {number} no 出席番号 
+     * @returns Attendの配列
+     */
+    public get(no: number): Attendee | undefined {
+        if (!this.list[no]) {
+            this.list[no] = new Attendee(this.room, no);
+        }
+        return this.list[no];
+    }
 }
 
 
+export const attends = writable<Attendees>(new Attendees());
