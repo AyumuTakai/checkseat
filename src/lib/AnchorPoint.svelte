@@ -7,6 +7,11 @@
     export let anchorSize: number = 16;
     export let fill: string = "white";
 
+
+    $:{
+        console.log({y});
+    }
+
     const dispatcher = createEventDispatcher();
 
     let dragging: boolean = false;
@@ -17,7 +22,7 @@
     };
 
     const pointerdownHandler = (ev: PointerEvent) => {
-        fill = "red";
+        fill = "white";
         const rect = ev.target as SVGRectElement;
         const bbox = rect.getBBox();
         dragging = true;

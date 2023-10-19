@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { editingObject } from "../roomStore";
     import AnchorPoint from "./AnchorPoint.svelte";
     import { createEventDispatcher } from "svelte";
 
@@ -10,10 +11,18 @@
     export let height: number;
     export let active: boolean = false;
 
-    let top: number = y;
-    let left: number = x;
-    let right: number = x + width;
-    let bottom: number = y + height;
+    let top = 0;
+    let left = 0;
+    let right = 0;
+    let bottom = 0;
+    $: {
+        if ($editingObject) {
+            top = $editingObject.y;
+            left = $editingObject.x;
+            right = $editingObject.x + $editingObject.width;
+            bottom = $editingObject.y + $editingObject.height;
+        }
+    }
 
     let padding: number = 8;
 
