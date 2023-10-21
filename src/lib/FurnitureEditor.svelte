@@ -1,6 +1,7 @@
 <script lang="ts">
     import { createEventDispatcher } from "svelte";
     import { editingObject } from "../roomStore";
+  import IconBar3 from "./IconBar3.svelte";
 
     export let furniture;
 
@@ -92,7 +93,7 @@
             on:click={() => {
                 dialog.showModal();
             }}
-        />
+        ><IconBar3 /></button>
     </td>
 </tr>
     <dialog bind:this={dialog}>
@@ -110,7 +111,7 @@
         <footer>
             <button on:click={()=>{
                 dialog.close();
-            }}>Close</button>
+            }}>Exit</button>
         </footer>
     </dialog>
 
