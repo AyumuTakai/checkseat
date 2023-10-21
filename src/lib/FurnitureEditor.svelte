@@ -19,7 +19,7 @@
             value={furniture.x}
             size="4"
             on:focus={selectHandler}
-            on:change={(ev) => {
+            on:input={(ev) => {
                 furniture.x = parseInt(ev.currentTarget.value);
                 editingObject.update((f)=>{
                     return f;
@@ -34,7 +34,7 @@
             value={furniture.y}
             size="4"
             on:focus={selectHandler}
-            on:change={(ev) => {
+            on:input={(ev) => {
                 furniture.y = parseInt(ev.currentTarget.value);
                 editingObject.update((f)=>{
                     return f;
@@ -49,7 +49,7 @@
             value={furniture.width}
             size="4"
             on:focus={selectHandler}
-            on:change={(ev) => {
+            on:input={(ev) => {
                 furniture.width = parseInt(ev.currentTarget.value);
                 editingObject.update((f)=>{
                     return f;
@@ -64,7 +64,7 @@
             value={furniture.height}
             size="4"
             on:focus={selectHandler}
-            on:change={(ev) => {
+            on:input={(ev) => {
                 furniture.height = parseInt(ev.currentTarget.value);
                 editingObject.update((f)=>{
                     return f;
