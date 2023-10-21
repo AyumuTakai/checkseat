@@ -103,6 +103,9 @@
   on:exit={() => {
     showDialog = false;
   }}
+  on:remove={() => {
+    distpacher("remove", { furniture: furniture });
+  }}
 />
 
 <style>
