@@ -7,6 +7,7 @@ import { StorageStore } from "./Strage";
  * 教室設定
  */
 export type Room = {
+  id: number;
   name: string;
   furnitures: any[];
   seats: any[];
@@ -76,3 +77,23 @@ export const rooms = new StorageStore<Room[]>("rooms");
 //     ],
 //   },
 // ]);
+
+export function createNewRoom() {
+  // 既存IDの最大値 + 1
+  const id =
+    rooms.get().reduce((maxValue, room) => {
+      return Math.max(maxValue, room.id);
+    }, 0) + 1;
+  const room = {
+    id,
+    name: "new room",
+    furnitures: [],
+    seats: [],
+    timetables: [],
+  };
+  rooms.update((r) => {
+    r.unshift(room);
+    return r;
+  });
+  return room;
+}

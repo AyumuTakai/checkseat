@@ -3,6 +3,7 @@ import {
   type Updater,
   type Writable,
   type Subscriber,
+  get,
 } from "svelte/store";
 
 // svelteでexportされていないので複製
@@ -20,13 +21,21 @@ export class StorageStore<T> {
     if (value) {
       localStorage.setItem(this.name, JSON.stringify(value));
     } else {
-      value = JSON.parse(localStorage.getItem(name));
+      const json = localStorage.getItem(name);
+      if (json) {
+        value = JSON.parse(json);
+      } else {
+        value = <T>[];
+      }
     }
     this.writable = writable<T>(value);
   }
   set(value?: T) {
     localStorage.setItem(this.name, JSON.stringify(value));
     this.writable.set(value);
+  }
+  get(): T {
+    return get(this.writable);
   }
   update(updater: Updater<T>) {
     this.writable.update((value: T) => {

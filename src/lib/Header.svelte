@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { rooms, currentRoom } from "../roomStore";
+  import { rooms, currentRoom, createNewRoom } from "../roomStore";
 
   let dialog: HTMLDialogElement;
 </script>
@@ -12,6 +12,8 @@
 >
   {#if $currentRoom}
     <h1>{$currentRoom.name}</h1>
+  {:else}
+    <h1>Check Seat</h1>
   {/if}
 </header>
 <dialog bind:this={dialog}>
@@ -19,14 +21,22 @@
     <h2>Rooms</h2>
   </header>
   <main>
-    {#each $rooms as room}
-      <button
-        on:click={() => {
-          currentRoom.set(room);
-          dialog.close();
-        }}>{room.name}</button
-      >
-    {/each}
+    <button
+      on:click={() => {
+        const room = createNewRoom();
+        currentRoom.set(room);
+      }}>Create new room</button
+    >
+    {#if $rooms}
+      {#each $rooms as room}
+        <button
+          on:click={() => {
+            currentRoom.set(room);
+            dialog.close();
+          }}>{room.name}</button
+        >
+      {/each}
+    {/if}
   </main>
   <footer>
     <button
