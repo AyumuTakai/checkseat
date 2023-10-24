@@ -1,12 +1,16 @@
 <script lang="ts">
+  import { editingObject } from "../roomStore";
+
   // https://svelte.dev/repl/cf05bd4a4ca14fb8ace8b6cdebbb58da?version=4.2.0
 
-  export let _class:string;
+  export let _class: string;
   export let items = [];
   export let activeTabValue = 1;
 
-
-  const handleClick = (tabValue) => () => (activeTabValue = tabValue);
+  const handleClick = (tabValue) => () => {
+    activeTabValue = tabValue;
+    editingObject.set(undefined);
+  };
 </script>
 
 <section class={_class}>
