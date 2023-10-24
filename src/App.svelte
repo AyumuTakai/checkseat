@@ -6,6 +6,7 @@
   import Tabs from "./lib/Tabs.svelte";
   import { currentRoom, rooms } from "./roomStore";
   import RoomEditor from "./lib/RoomEditor.svelte";
+  import Header from "./lib/Header.svelte";
 
   const items = [
     {
@@ -30,6 +31,7 @@
   });
 </script>
 
+<Header />
 <main>
   <RoomMap _class="halfheight" />
   <Tabs _class="halfheight" {items} />
@@ -43,17 +45,17 @@
   }
   main {
     position: absolute;
-    top: 0;
+    top: 2rem;
     left: 0;
     width: 100vw;
-    height: 100vh;
+    height: calc(100vh - 2rem);
     padding: 0;
     margin: 0;
     display: flex;
     flex-direction: column;
   }
   main :global(.halfheight) {
-    height: 50vh;
+    height: calc(50vh - 1rem);
     width: 100%;
     object-fit: contain;
   }

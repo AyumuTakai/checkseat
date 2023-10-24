@@ -15,7 +15,6 @@
 
 <section class={_class}>
   {#if $currentRoom}
-    <h1>{$currentRoom.name}</h1>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -64,13 +63,6 @@
 </section>
 
 <style>
-  h1 {
-    display: block;
-    width: 100%;
-    text-align: center;
-    background-color: navy;
-    color: white;
-  }
   svg {
     width: 100%;
     height: 100%;
