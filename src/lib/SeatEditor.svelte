@@ -24,7 +24,7 @@
     ><input
       type="number"
       value={seat.cx}
-      on:change={(ev) => {
+      on:input={(ev) => {
         seat.cx = parseInt(ev.currentTarget.value);
         distpacher("update", { seat });
       }}
@@ -36,7 +36,7 @@
       type="number"
       value={seat.cy}
       size="4"
-      on:change={(ev) => {
+      on:input={(ev) => {
         seat.cy = parseInt(ev.currentTarget.value);
         distpacher("update", { seat });
       }}
