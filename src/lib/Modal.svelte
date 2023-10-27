@@ -1,13 +1,18 @@
 <script lang="ts">
+  import { createEventDispatcher } from "svelte";
+
   export let title: string = "";
   export let show: boolean = false;
   let dialog: HTMLDialogElement;
+
+  const distpacher = createEventDispatcher();
 
   $: if (dialog) {
     if (show) {
       dialog.showModal();
     } else {
       dialog.close();
+      distpacher("close");
     }
   }
 </script>
@@ -23,6 +28,7 @@
     <button
       on:click={() => {
         dialog.close();
+        distpacher("close");
       }}>Exit</button
     >
   </footer>
