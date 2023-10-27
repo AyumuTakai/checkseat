@@ -94,7 +94,7 @@
     <button
       on:click={() => {
         showDialog = true;
-      }}><IconBar3 /></button
+      }}><IconBar3 size="1rem" /></button
     >
   </td>
 </tr>

@@ -1,5 +1,6 @@
 <script lang="ts">
   export let stroke: string = "currentColor";
+  export let size: string = "24px";
 </script>
 
 <svg
@@ -8,6 +9,7 @@
   viewBox="0 0 24 24"
   stroke-width="1.5"
   {stroke}
+  style="--size:{size}"
 >
   <path
     stroke-linecap="round"
@@ -18,7 +20,7 @@
 
 <style>
   svg {
-    width: 24px;
-    height: 24px;
+    width: var(--size);
+    height: var(--size);
   }
 </style>
