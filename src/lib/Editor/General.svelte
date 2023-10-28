@@ -7,6 +7,7 @@
     currentRoom.update((room) => {
       room.furnitures = sampleRoom.furnitures;
       room.seats = sampleRoom.seats;
+      room.timetables = sampleRoom.timetables;
       return room;
     });
     rooms.set($rooms);
