@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { addLog } from "../actionStore";
   import { Attendee } from "../attendStore";
+  import { addLog } from "./EventList.svelte";
   import Seat from "./Seat.svelte";
 
   export let seat: { cx: number; cy: number; no: number };
@@ -26,14 +26,14 @@
 </script>
 
 <Seat
+  no={seat.no}
   cx={seat.cx}
   cy={seat.cy}
-  no={seat.no}
-  on:click={onClickHandler}
   stroke={"black"}
   fill={isAttend ? "lightgreen" : "white"}
   strokeDark={"white"}
   fillDark={isAttend ? "orange" : "black"}
+  on:click={onClickHandler}
 />
 
 <style>
