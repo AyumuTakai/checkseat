@@ -2,6 +2,7 @@ import { writable } from "svelte/store";
 import Furniture from "./lib/Furniture.svelte";
 import Seat from "./lib/SeatChecker.svelte";
 import { StorageStore } from "./lib/common/Strage";
+import { Attendees, attends } from "./attendStore";
 
 /**
  * 教室設定
@@ -115,4 +116,7 @@ export const currentRoom = new StorageStore<Room>("currentRoom", {
     }
     return room;
   },
+});
+currentRoom.subscribe((room: Room) => {
+  attends.set(new Attendees(room.id));
 });
