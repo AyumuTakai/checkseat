@@ -21,6 +21,7 @@
       list="rooms"
       bind:value={$currentRoom.name}
       on:input={onChangeNameHandler}
+      name="roomName"
     />
   </p>
   <button class="createSample" on:click={onCreateSampleHandler}>Sample</button>
