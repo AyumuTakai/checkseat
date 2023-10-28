@@ -1,7 +1,13 @@
 <script lang="ts">
+  import { createEventDispatcher } from "svelte";
   import { rooms, currentRoom, createNewRoom } from "../roomStore";
   import IconEdit from "./IconEdit.svelte";
-  import Modal from "./Modal.svelte";
+  import Modal from "./common/Modal.svelte";
+  import IconCheck from "./Icons/IconCheck.svelte";
+
+  export let mode: "Check" | "Editor";
+
+  const distpacher = createEventDispatcher();
 
   let showModal: boolean = false;
 </script>
@@ -21,7 +27,23 @@
     </button>
   </h1>
   {#if $currentRoom}
-    <button class="edit"><IconEdit stroke="white" /></button>
+    {#if mode === "Check"}
+      <button
+        class="edit"
+        on:click={() => {
+          mode = "Editor";
+          distpacher("changeMode", { mode });
+        }}><IconEdit stroke="white" /></button
+      >
+    {:else if mode === "Editor"}
+      <button
+        class="edit"
+        on:click={() => {
+          mode = "Check";
+          distpacher("changeMode", { mode });
+        }}><IconCheck stroke="white" /></button
+      >
+    {/if}
   {/if}
 </header>
 <Modal

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
-  import IconBar3 from "./IconBar3.svelte";
-  import EditorMenu from "./EditorMenu.svelte";
+  import IconBar3 from "../IconBar3.svelte";
+  import EditorMenu from "../EditorMenu.svelte";
   export let seat;
 
   const distpacher = createEventDispatcher();

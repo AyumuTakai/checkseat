@@ -1,14 +1,17 @@
 <script lang="ts">
-  import { onMount } from "svelte";
   import AttendList from "./lib/AttendList.svelte";
   import EventList from "./lib/EventList.svelte";
   import RoomMap from "./lib/RoomMap.svelte";
-  import Tabs from "./lib/Tabs.svelte";
-  import { currentRoom, rooms } from "./roomStore";
-  import RoomEditor from "./lib/RoomEditor.svelte";
+  import Tabs from "./lib/common/Tabs.svelte";
+  import RoomEditor from "./lib/Editor/RoomEditor.svelte";
+  import General from "./lib/Editor/General.svelte";
   import Header from "./lib/Header.svelte";
+  import FurnituresEditor from "./lib/Editor/FurnituresEditor.svelte";
+  import SeatEditor from "./lib/Editor/SeatEditor.svelte";
 
-  const items = [
+  let mode: "Check" | "Editor" = "Check";
+
+  const checkTabs = [
     {
       label: "List",
       value: 1,
@@ -19,22 +22,45 @@
       value: 2,
       component: EventList,
     },
+  ];
+  const editorTabs = [
     {
-      label: "Edit",
+      label: "General",
+      value: 1,
+      component: General,
+    },
+    {
+      label: "TimeTable",
+      value: 2,
+      component: AttendList,
+    },
+    {
+      label: "Furnitures",
       value: 3,
-      component: RoomEditor,
+      component: FurnituresEditor,
+    },
+    {
+      label: "Seats",
+      value: 4,
+      component: SeatEditor,
     },
   ];
-
-  onMount(() => {
-    currentRoom.set($rooms[0]);
-  });
 </script>
 
-<Header />
+<Header
+  {mode}
+  on:changeMode={(ev) => {
+    mode = ev.detail.mode;
+  }}
+/>
 <main>
-  <RoomMap _class="halfheight" />
-  <Tabs _class="halfheight" {items} />
+  {#if mode === "Check"}
+    <RoomMap _class="halfheight" />
+    <Tabs _class="halfheight" items={checkTabs} />
+  {:else if mode === "Editor"}
+    <RoomEditor _class="halfheight" />
+    <Tabs _class="halfheight" items={editorTabs} />
+  {/if}
 </main>
 
 <style>

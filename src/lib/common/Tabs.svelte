@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { editingObject } from "../roomStore";
+  import { createEventDispatcher } from "svelte";
 
   // https://svelte.dev/repl/cf05bd4a4ca14fb8ace8b6cdebbb58da?version=4.2.0
 
@@ -7,9 +7,11 @@
   export let items = [];
   export let activeTabValue = 1;
 
+  const dispatcher = createEventDispatcher();
+
   const handleClick = (tabValue) => () => {
     activeTabValue = tabValue;
-    editingObject.set(undefined);
+    dispatcher("change", { tab: tabValue });
   };
 </script>
 

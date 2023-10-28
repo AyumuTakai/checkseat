@@ -16,22 +16,44 @@ declare type Invalidator<T> = (value?: T) => void;
 export class StorageStore<T> {
   name: string;
   writable: Writable<T>;
-  constructor(name: string, value?: T) {
+  stringify: (v: T) => string;
+  parse: (json: string) => T;
+  constructor(
+    name: string,
+    opt?: {
+      value?: T;
+      stringify?: (value: T) => string;
+      parse?: (json: string) => T;
+    }
+  ) {
     this.name = name;
-    if (value) {
-      localStorage.setItem(this.name, JSON.stringify(value));
+    let value;
+
+    if (opt && opt.stringify) {
+      this.stringify = opt.stringify;
+    } else {
+      this.stringify = (v: T) => {
+        return JSON.stringify(v);
+      };
+    }
+    if (opt && opt.parse) {
+      this.parse = opt.parse;
+    } else {
+      this.parse = (json: string) => {
+        return JSON.parse(json) as T;
+      };
+    }
+    if (opt && opt.value) {
+      value = opt.value;
+      localStorage.setItem(this.name, JSON.stringify(opt.value));
     } else {
       const json = localStorage.getItem(name);
-      if (json) {
-        value = JSON.parse(json);
-      } else {
-        value = <T>[];
-      }
+      value = this.parse(json);
     }
     this.writable = writable<T>(value);
   }
   set(value?: T) {
-    localStorage.setItem(this.name, JSON.stringify(value));
+    localStorage.setItem(this.name, this.stringify(value));
     this.writable.set(value);
   }
   get(): T {
@@ -40,7 +62,7 @@ export class StorageStore<T> {
   update(updater: Updater<T>) {
     this.writable.update((value: T) => {
       const updated = updater(value);
-      localStorage.setItem(this.name, JSON.stringify(updated));
+      localStorage.setItem(this.name, this.stringify(updated));
       return updated;
     });
   }

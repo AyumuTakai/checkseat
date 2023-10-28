@@ -1,16 +1,14 @@
 <script lang="ts">
-  import { currentRoom, editingObject } from "../roomStore";
-  import Anchor from "./Anchor.svelte";
+  import { attends } from "../attendStore";
+  import { currentRoom } from "../roomStore";
   import Furniture from "./Furniture.svelte";
-  import Seat from "./Seat.svelte";
+  import SeatChecker from "./SeatChecker.svelte";
 
   export let _class: string;
 
   const activeColor = "red";
   const nonActiveColor = "white";
   let ref = null;
-
-  const resizeHandler = (ev: CustomEvent) => {};
 </script>
 
 <section class={_class}>
@@ -25,24 +23,8 @@
       bind:this={ref}
     >
       <g>
-        {#each $currentRoom.furnitures as f}
-          <Anchor
-            active={f === $editingObject}
-            x={f.x}
-            y={f.y}
-            width={f.width}
-            height={f.height}
-            on:update={(ev) => {
-              const { left, right, top, bottom } = ev.detail;
-              f.x = Math.floor(left);
-              f.y = Math.floor(top);
-              f.width = Math.floor(right - left);
-              f.height = Math.floor(bottom - top);
-              currentRoom.update((cr) => {
-                return cr;
-              });
-            }}
-          >
+        {#if $currentRoom.furnitures}
+          {#each $currentRoom.furnitures as f}
             <Furniture
               x={f.x}
               y={f.y}
@@ -50,11 +32,13 @@
               height={f.height}
               text={f.text}
             />
-          </Anchor>
-        {/each}
-        {#each $currentRoom.seats as s}
-          <Seat cx={s.cx} cy={s.cy} no={s.no} />
-        {/each}
+          {/each}
+        {/if}
+        {#if $currentRoom.seats}
+          {#each $currentRoom.seats as seat}
+            <SeatChecker {seat} attendee={$attends.get(seat.no)} />
+          {/each}
+        {/if}
       </g>
     </svg>
   {:else}
