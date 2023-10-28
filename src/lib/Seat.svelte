@@ -2,14 +2,13 @@
   import { createEventDispatcher } from "svelte";
 
   const dispatcher = createEventDispatcher();
+  let el: SVGEllipseElement;
 
   export let no: number = 0;
   export let cx: number = 0;
   export let cy: number = 0;
   export let rx: number = 20;
   export let ry: number = 20;
-
-  let el: SVGEllipseElement;
 
   export let stroke: string = "black";
   export let fill: string = "white";
