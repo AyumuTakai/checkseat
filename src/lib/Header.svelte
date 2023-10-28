@@ -1,7 +1,7 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
   import { rooms, currentRoom, createNewRoom } from "../roomStore";
-  import IconEdit from "./IconEdit.svelte";
+  import IconEdit from "./Icons/IconEdit.svelte";
   import Modal from "./common/Modal.svelte";
   import IconCheck from "./Icons/IconCheck.svelte";
 

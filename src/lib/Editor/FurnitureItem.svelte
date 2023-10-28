@@ -1,7 +1,7 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
   import { editingObject } from "../../roomStore";
-  import IconBar3 from "../IconBar3.svelte";
+  import IconBar3 from "../Icons/IconBar3.svelte";
   import EditorMenu from "../EditorMenu.svelte";
 
   export let furniture;
