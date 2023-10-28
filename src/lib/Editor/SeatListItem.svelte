@@ -2,6 +2,8 @@
   import { createEventDispatcher } from "svelte";
   import IconBar3 from "../Icons/IconBar3.svelte";
   import EditorMenu from "./EditorMenu.svelte";
+
+  export let key: string;
   export let seat;
 
   const distpacher = createEventDispatcher();
@@ -18,6 +20,7 @@
         seat.no = parseInt(ev.currentTarget.value);
         distpacher("update", { seat });
       }}
+      id={`s_no_${key}`}
     /></td
   >
   <td
@@ -29,6 +32,7 @@
         distpacher("update", { seat });
       }}
       size="4"
+      id={`s_cx_${key}`}
     /></td
   >
   <td
@@ -40,6 +44,7 @@
         seat.cy = parseInt(ev.currentTarget.value);
         distpacher("update", { seat });
       }}
+      id={`s_cy_${key}`}
     /></td
   >
   <td class="buttons">

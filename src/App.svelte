@@ -7,7 +7,7 @@
   import General from "./lib/Editor/General.svelte";
   import Header from "./lib/Header.svelte";
   import FurnituresEditor from "./lib/Editor/FurnituresEditor.svelte";
-  import SeatEditor from "./lib/Editor/SeatEditor.svelte";
+  import SeatsList from "./lib/Editor/SeatsList.svelte";
 
   let mode: "Check" | "Editor" = "Check";
 
@@ -42,7 +42,7 @@
     {
       label: "Seats",
       value: 4,
-      component: SeatEditor,
+      component: SeatsList,
     },
   ];
 </script>
