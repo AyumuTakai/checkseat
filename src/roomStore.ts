@@ -162,4 +162,3 @@ export const currentRoom = new StorageStore<Room>("currentRoom", {
     return room;
   },
 });
-console.log({ currentRoom: currentRoom.get() });
