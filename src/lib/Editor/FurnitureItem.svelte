@@ -4,6 +4,7 @@
   import IconBar3 from "../Icons/IconBar3.svelte";
   import EditorMenu from "./EditorMenu.svelte";
 
+  export let key: string;
   export let furniture;
 
   const distpacher = createEventDispatcher();
@@ -29,6 +30,7 @@
         });
         distpacher("update", { furniture });
       }}
+      name={`f_${key}_x`}
     /></td
   >
   <td
@@ -44,6 +46,7 @@
         });
         distpacher("update", { furniture });
       }}
+      name={`f_${key}_y`}
     /></td
   >
   <td
@@ -59,6 +62,7 @@
         });
         distpacher("update", { furniture });
       }}
+      name={`f_${key}_width`}
     /></td
   >
   <td
@@ -74,6 +78,7 @@
         });
         distpacher("update", { furniture });
       }}
+      name={`f_${key}_height`}
     /></td
   >
   <td
@@ -88,6 +93,7 @@
         });
         distpacher("update", { furniture });
       }}
+      name={`f_${key}_text`}
     /></td
   >
   <td class="buttons">

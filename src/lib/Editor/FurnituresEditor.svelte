@@ -38,8 +38,12 @@
       <th>text</th>
       <th><button on:click={onAddFurnitureHandler}>+</button></th>
     </tr>
-    {#each $currentRoom.furnitures as furniture}
-      <FurnitureItem {furniture} on:update={onFurnitureUpdateHandler} />
+    {#each $currentRoom.furnitures as furniture, index}
+      <FurnitureItem
+        key={index.toString()}
+        {furniture}
+        on:update={onFurnitureUpdateHandler}
+      />
     {/each}
   </table>
 </section>
