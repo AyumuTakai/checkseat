@@ -1,7 +1,63 @@
+<script lang="ts" context="module">
+  import { writable } from "svelte/store";
+  import { currentRoom } from "../roomStore";
+  export type Attend = {
+    no: number;
+    isAttend: boolean;
+    attendTime?: Date;
+    leaveTime?: Date;
+  };
+  export const attends = writable<{ [no: number]: Attend }>({});
+  currentRoom.subscribe((_currentRoom) => {
+    if (_currentRoom) {
+      for (const seat of _currentRoom.seats) {
+        if (!attends[seat.no]) {
+          attends[seat.no] = {
+            no: seat.no,
+            isAttend: false,
+          };
+        }
+      }
+    }
+  });
+
+  export function attend(no: number): void {
+    attends.update((_attends) => {
+      if (!_attends[no]) {
+        _attends[no] = {
+          no,
+          isAttend: true,
+        };
+      } else {
+        _attends[no]["isAttend"] = true;
+      }
+      _attends[no]["attendTime"] = new Date();
+      // console.log("attend", _attends[no]);
+      return _attends;
+    });
+  }
+
+  export function leave(no: number): void {
+    attends.update((_attends) => {
+      if (!_attends[no]) {
+        _attends[no] = {
+          no,
+          isAttend: false,
+        };
+      } else {
+        _attends[no]["isAttend"] = false;
+      }
+      _attends[no]["leaveTime"] = new Date();
+      // console.log("leave", _attends[no]);
+      return _attends;
+    });
+  }
+</script>
+
 <script lang="ts">
   import { onMount } from "svelte";
   import type { Action } from "../actionStore";
-  import { currentRoom } from "../roomStore";
+  import { getFormattedDate } from "./common/utility";
 
   const marks = ["x", "/", "○"];
 
@@ -48,16 +104,30 @@
     <table>
       <tr>
         <th>no</th>
+        <th>出席時刻</th>
+        <th>退席時刻</th>
+        <!--
         {#each $currentRoom.timetables as time}
           <th>{time.title}</th>
         {/each}
+        -->
       </tr>
-      {#each $currentRoom.seats as seat}
+      {#each $currentRoom.seats as seat (seat.no)}
         <tr>
           <th>{seat.no}</th>
-          {#each $currentRoom.timetables as time}
+          <td>
+            {$attends[seat.no] && $attends[seat.no]["attendTime"]
+              ? getFormattedDate($attends[seat.no]["attendTime"], "hh:mm:ss")
+              : ""}</td
+          >
+          <td>
+            {$attends[seat.no] && $attends[seat.no]["leaveTime"]
+              ? getFormattedDate($attends[seat.no]["leaveTime"], "hh:mm:ss")
+              : ""}
+          </td>
+          <!-- {#each $currentRoom.timetables as time}
             <td>{mark(checkAttend(seat.no, time.begin, time.end))}</td>
-          {/each}
+          {/each} -->
         </tr>
       {/each}
     </table>
@@ -80,6 +150,7 @@
   th,
   td {
     border: solid 1px gray;
+    text-align: center;
   }
   @media (prefers-color-scheme: dark) {
     th,
