@@ -41,7 +41,7 @@
   {mode}
   on:changeMode={(ev) => {
     mode = ev.detail.mode;
-    console.log({ mode });
+    // console.log({ mode });
   }}
 />
 <main>
