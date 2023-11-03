@@ -1,26 +1,7 @@
 <script lang="ts">
   import { actionLog } from "../actionStore";
+  import { getFormattedDate } from "./common/utility";
 
-  // https://ribbit.konomi.app/blog/javascript-date-format/
-  const getFormattedDate = (date: Date, format: string) => {
-    const symbol = {
-      M: date.getMonth() + 1,
-      d: date.getDate(),
-      h: date.getHours(),
-      m: date.getMinutes(),
-      s: date.getSeconds(),
-    };
-
-    const formatted = format.replace(/(M+|d+|h+|m+|s+)/g, (v) =>
-      (
-        (v.length > 1 ? "0" : "") + symbol[v.slice(-1) as keyof typeof symbol]
-      ).slice(-2)
-    );
-
-    return formatted.replace(/(y+)/g, (v) =>
-      date.getFullYear().toString().slice(-v.length)
-    );
-  };
   export function clearLog() {
     actionLog.set([]);
     localStorage.removeItem("log");
