@@ -1,5 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
+  import XMark from "../Icons/XMark.svelte";
 
   export let title: string = "";
   export let show: boolean = false;
@@ -20,48 +21,63 @@
 <dialog bind:this={dialog}>
   <header>
     <h2>{title}</h2>
+    <button
+      on:click={() => {
+        dialog.close();
+        distpacher("close");
+      }}><XMark stroke={"white"} /></button
+    >
   </header>
   <section>
     <slot />
   </section>
   <footer>
-    <button
-      on:click={() => {
-        dialog.close();
-        distpacher("close");
-      }}>Exit</button
-    >
+    <slot name="footer" />
   </footer>
 </dialog>
 
 <style>
   dialog {
-    min-width: 400px;
-    min-height: 300px;
+    --width: 400px;
+    --height: 300px;
+    min-width: var(--width);
+    min-height: var(--height);
     position: absolute;
     left: 50%;
     top: 50%;
-    margin-left: -200px;
-    margin-top: -150px;
-    border: solid 1px black;
+    margin-left: calc(var(--width) / -2);
+    margin-top: calc(var(--height) / -2);
+    border: none;
+    border-radius: var(--border-radius);
+    box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.35);
   }
-  dialog header {
+  header {
     width: 100%;
-    background-color: gray;
+    background-color: var(--primary-color, gray);
     text-align: center;
   }
-  dialog section {
+  h2 {
+    display: block;
+    width: 100%;
+    color: white;
+  }
+  header button {
+    position: absolute;
+    right: 0.25rem;
+    top: 0.25rem;
+    border: solid 1px white;
+    border-radius: var(--border-radius);
+    background-color: transparent;
+  }
+  section {
     display: flex;
     flex-direction: column;
   }
-  dialog footer {
+  footer {
     position: absolute;
     width: 100%;
     bottom: 0;
     left: 0;
     padding: 0.2rem 1rem;
-  }
-  dialog footer button {
-    width: 100%;
   }
 </style>

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { actionLog } from "../actionStore";
-  import Button from "./Button.svelte";
+  import Button from "./common/Button.svelte";
   import FormattedDate from "./common/FormattedDate.svelte";
 
   export function clearLog() {

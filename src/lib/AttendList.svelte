@@ -164,7 +164,7 @@
     color: black;
   }
   table {
-    border: solid 1px black;
+    border: solid 1px gray;
     width: 100%;
     height: 100%;
     border-spacing: 0;
@@ -172,8 +172,9 @@
   }
   th,
   td {
-    border: solid 1px gray;
+    border: solid 1px #333;
     text-align: center;
+    color: #333;
   }
   @media (prefers-color-scheme: dark) {
     th,

@@ -74,8 +74,7 @@
 
 <style>
   header {
-    display: flex;
-    background-color: navy;
+    background-color: var(--primary-color);
     height: 2rem;
   }
   h1 {
@@ -87,15 +86,20 @@
     height: 2rem;
   }
   h1 button {
-    height: 2rem;
-    background-color: whitesmoke;
-    color: black;
-    border: solid navy;
+    height: 1.8rem;
+    width: 20em;
+    background-color: var(--primary-background);
+    color: var(--primary-color);
+    border: none;
     padding: 0 0.8rem;
-    border-radius: 0.3rem;
+    border-radius: var(--border-radius);
+    margin-top: 0.1rem;
   }
   button.edit {
     background-color: unset;
     border: none;
+    position: absolute;
+    right: 0.2rem;
+    top: 0.2rem;
   }
 </style>

@@ -6,6 +6,7 @@
   import RoomEditor from "./lib/RoomEditor.svelte";
   import RoomMap from "./lib/RoomMap.svelte";
   import Tabs from "./lib/Tabs.svelte";
+  import Button from "./lib/common/Button.svelte";
   import { currentRoom, rooms } from "./roomStore";
 
   let mode: "Check" | "Editor" = "Check";
@@ -52,7 +53,12 @@
   {#if mode === "Check"}
     <RoomMap _class="halfheight" />
     <Tabs _class="halfheight" items={tabItems[mode]} />
-    <button on:click={clearAttendsHandler}>Clear</button>
+    <Button
+      on:click={clearAttendsHandler}
+      --position={"absolute"}
+      --top={"0.5rem"}
+      --left={"0.5rem"}>Clear</Button
+    >
   {:else if mode === "Editor"}
     <RoomMap _class="halfheight" />
     <Tabs _class="halfheight" items={tabItems[mode]} />
@@ -64,6 +70,12 @@
   :global(*::before),
   :global(*::after) {
     box-sizing: border-box;
+    --primary-color: #0d6efd;
+    --primary-font: #fff;
+    --primary-background: #fff;
+    --button-primary-bgc: var(--primary-color);
+    --button-primary-c: #fff;
+    --border-radius: 0.4rem;
   }
   main {
     position: absolute;
@@ -80,14 +92,5 @@
     height: calc(50vh - 1rem);
     width: 100%;
     object-fit: contain;
-  }
-  button {
-    position: absolute;
-    top: 0.5rem;
-    left: 0.5rem;
-    width: 5em;
-    height: 2em;
-    color: black;
-    border-radius: 0.4rem;
   }
 </style>
