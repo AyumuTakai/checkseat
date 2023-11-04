@@ -41,6 +41,9 @@
 </section>
 
 <style>
+  section {
+    padding: 1rem;
+  }
   svg {
     width: 100%;
     height: 100%;
