@@ -1,6 +1,7 @@
 <script lang="ts">
   import { actionLog } from "../actionStore";
-  import FormattedDate from "./FormattedDate.svelte";
+  import Button from "./Button.svelte";
+  import FormattedDate from "./common/FormattedDate.svelte";
 
   export function clearLog() {
     actionLog.set([]);
@@ -9,7 +10,8 @@
 </script>
 
 <section>
-  <button on:click={clearLog}>Clear LOG</button>
+  <Button on:click={clearLog}>Clear LOG</Button>
+  <hr />
   {#if $actionLog}
     <ul>
       {#each $actionLog as event}
@@ -46,6 +48,9 @@
     color: black;
     list-style: none;
     font-family: monospace;
+  }
+  hr {
+    margin: 0.5rem 0;
   }
   @media (prefers-color-scheme: dark) {
     section {
