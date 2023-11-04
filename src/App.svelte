@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import AttendList from "./lib/AttendList.svelte";
+  import AttendList, { clearAttends } from "./lib/AttendList.svelte";
   import EventList from "./lib/EventList.svelte";
   import Header from "./lib/Header.svelte";
   import RoomEditor from "./lib/RoomEditor.svelte";
@@ -35,6 +35,10 @@
   onMount(() => {
     currentRoom.set($rooms[0]);
   });
+
+  const clearAttendsHandler = () => {
+    clearAttends();
+  };
 </script>
 
 <Header
@@ -48,6 +52,7 @@
   {#if mode === "Check"}
     <RoomMap _class="halfheight" />
     <Tabs _class="halfheight" items={tabItems[mode]} />
+    <button on:click={clearAttendsHandler}>Clear</button>
   {:else if mode === "Editor"}
     <RoomMap _class="halfheight" />
     <Tabs _class="halfheight" items={tabItems[mode]} />
@@ -75,5 +80,14 @@
     height: calc(50vh - 1rem);
     width: 100%;
     object-fit: contain;
+  }
+  button {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    width: 5em;
+    height: 2em;
+    color: black;
+    border-radius: 0.4rem;
   }
 </style>

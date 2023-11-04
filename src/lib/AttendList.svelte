@@ -52,6 +52,23 @@
       return _attends;
     });
   }
+
+  export function clearAttends(): void {
+    currentRoom.update((_currentRoom) => {
+      if (_currentRoom) {
+        attends.update((_attends) => {
+          for (const seat of _currentRoom.seats) {
+            _attends[seat.no] = {
+              no: seat.no,
+              isAttend: false,
+            };
+          }
+          return _attends;
+        });
+        return _currentRoom;
+      }
+    });
+  }
 </script>
 
 <script lang="ts">
