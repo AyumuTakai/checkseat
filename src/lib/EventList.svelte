@@ -1,6 +1,6 @@
 <script lang="ts">
   import { actionLog } from "../actionStore";
-  import { getFormattedDate } from "./common/utility";
+  import FormattedDate from "./FormattedDate.svelte";
 
   export function clearLog() {
     actionLog.set([]);
@@ -15,7 +15,11 @@
       {#each $actionLog as event}
         {#if event}
           <li>
-            {getFormattedDate(event.datetime, "yyyy/MM/dd hh:mm:ss")} R:{event.room}
+            <FormattedDate
+              date={event.datetime}
+              format={"yyyy/MM/dd hh:mm:ss"}
+            />
+            R:{event.room}
             [{("0" + event.no).slice(-2)}] {event.action}
           </li>
         {/if}
