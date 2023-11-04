@@ -57,7 +57,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import type { Action } from "../actionStore";
-  import { getFormattedDate } from "./common/utility";
+  import FormattedDate from "./FormattedDate.svelte";
 
   const marks = ["x", "/", "○"];
 
@@ -116,14 +116,20 @@
         <tr>
           <th>{seat.no}</th>
           <td>
-            {$attends[seat.no] && $attends[seat.no]["attendTime"]
-              ? getFormattedDate($attends[seat.no]["attendTime"], "hh:mm:ss")
-              : ""}</td
+            {#if $attends[seat.no] && $attends[seat.no]["attendTime"]}
+              <FormattedDate
+                date={$attends[seat.no]["attendTime"]}
+                format={"hh:mm:ss"}
+              />
+            {/if}</td
           >
           <td>
-            {$attends[seat.no] && $attends[seat.no]["leaveTime"]
-              ? getFormattedDate($attends[seat.no]["leaveTime"], "hh:mm:ss")
-              : ""}
+            {#if $attends[seat.no] && $attends[seat.no]["leaveTime"]}
+              <FormattedDate
+                date={$attends[seat.no]["leaveTime"]}
+                format={"hh:mm:ss"}
+              />
+            {/if}
           </td>
           <!-- {#each $currentRoom.timetables as time}
             <td>{mark(checkAttend(seat.no, time.begin, time.end))}</td>
