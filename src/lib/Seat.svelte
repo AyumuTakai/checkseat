@@ -47,10 +47,10 @@
 
   const onClickHandler = (e: Event) => {
     if ($attends[no] && $attends[no]["isAttend"]) {
-      writeLog("non active");
+      writeLog("leave");
       leave(no);
     } else {
-      writeLog("active");
+      writeLog("attend");
       attend(no);
     }
   };
