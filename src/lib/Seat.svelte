@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { addLog } from "../actionStore";
   import { currentRoom, type Room } from "../roomStore";
   import { attend, attends, leave } from "./AttendList.svelte";
+  import { addLog } from "./EventList.svelte";
 
   export let no: number = 0;
   export let cx: number = 0;

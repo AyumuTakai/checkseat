@@ -73,7 +73,7 @@
 
 <script lang="ts">
   import { onMount } from "svelte";
-  import type { Action } from "../actionStore";
+  import type { Action } from "./EventList.svelte";
   import FormattedDate from "./common/FormattedDate.svelte";
 
   const marks = ["x", "/", "○"];
