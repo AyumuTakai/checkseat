@@ -1,6 +1,9 @@
 <script lang="ts" context="module">
   // https://ribbit.konomi.app/blog/javascript-date-format/
-  export function getFormattedDate(date: Date, format: string) {
+  export function getFormattedDate(dateOrStr: Date | string, format: string) {
+    const date: Date =
+      typeof dateOrStr === "string" ? new Date(dateOrStr) : dateOrStr;
+
     const symbol = {
       M: date.getMonth() + 1,
       d: date.getDate(),
