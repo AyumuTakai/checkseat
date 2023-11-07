@@ -1,13 +1,18 @@
 <script lang="ts" context="module">
-  import { writable } from "svelte/store";
   import { currentRoom } from "../roomStore";
+  import { StorageStore } from "./common/Strage";
+
   export type Attend = {
     no: number;
     isAttend: boolean;
     attendTime?: Date;
     leaveTime?: Date;
   };
-  export const attends = writable<{ [no: number]: Attend }>({});
+
+  export const attends = new StorageStore<{ [no: number]: Attend }>(
+    "attends",
+    {}
+  );
   currentRoom.subscribe((_currentRoom) => {
     if (_currentRoom) {
       for (const seat of _currentRoom.seats) {
