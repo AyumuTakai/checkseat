@@ -5,8 +5,8 @@
   import Header from "./lib/Header.svelte";
   import RoomEditor from "./lib/RoomEditor.svelte";
   import RoomMap from "./lib/RoomMap.svelte";
-  import Tabs from "./lib/Tabs.svelte";
   import Button from "./lib/common/Button.svelte";
+  import Tabs from "./lib/common/Tabs.svelte";
   import { currentRoom, rooms } from "./roomStore";
 
   let mode: "Check" | "Editor" = "Check";
