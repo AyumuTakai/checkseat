@@ -9,10 +9,15 @@
     leaveTime?: Date;
   };
 
-  export const attends = new StorageStore<{ [no: number]: Attend }>(
-    "attends",
-    {}
-  );
+  export const attends = new StorageStore<{ [no: number]: Attend }>("attends", {
+    parse: (json: string) => {
+      if (json) {
+        return JSON.parse(json);
+      } else {
+        return {};
+      }
+    },
+  });
   currentRoom.subscribe((_currentRoom) => {
     if (_currentRoom) {
       for (const seat of _currentRoom.seats) {
