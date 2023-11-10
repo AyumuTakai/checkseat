@@ -3,10 +3,13 @@
   import AttendList, { clearAttends } from "./lib/AttendList.svelte";
   import EventList from "./lib/EventList.svelte";
   import Header from "./lib/Header.svelte";
-  import RoomEditor from "./lib/RoomEditor.svelte";
   import RoomMap from "./lib/RoomMap.svelte";
   import Button from "./lib/common/Button.svelte";
   import Tabs from "./lib/common/Tabs.svelte";
+  import FurnituresSettings from "./lib/editor/FurnituresSettings.svelte";
+  import GeneralSettings from "./lib/editor/GeneralSettings.svelte";
+  import SeatsSettings from "./lib/editor/SeatsSettings.svelte";
+  import TimetableSettings from "./lib/editor/TimetableSettings.svelte";
   import { currentRoom, rooms } from "./roomStore";
 
   let mode: "Check" | "Editor" = "Check";
@@ -26,9 +29,24 @@
     ],
     Editor: [
       {
-        label: "Edit",
+        label: "General",
         value: 1,
-        component: RoomEditor,
+        component: GeneralSettings,
+      },
+      {
+        label: "Timetable",
+        value: 2,
+        component: TimetableSettings,
+      },
+      {
+        label: "Furnitures",
+        value: 3,
+        component: FurnituresSettings,
+      },
+      {
+        label: "Seats",
+        value: 4,
+        component: SeatsSettings,
       },
     ],
   };
