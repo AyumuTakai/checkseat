@@ -18,18 +18,6 @@
       }
     },
   });
-  currentRoom.subscribe((_currentRoom) => {
-    if (_currentRoom) {
-      for (const seat of _currentRoom.seats) {
-        if (!attends[seat.no]) {
-          attends[seat.no] = {
-            no: seat.no,
-            isAttend: false,
-          };
-        }
-      }
-    }
-  });
 
   export function attend(no: number): void {
     attends.update((_attends) => {
@@ -89,6 +77,19 @@
   const marks = ["x", "/", "○"];
 
   let today: Date;
+
+  currentRoom.subscribe((_currentRoom) => {
+    if (_currentRoom) {
+      for (const seat of _currentRoom.seats) {
+        if (!attends[seat.no]) {
+          attends[seat.no] = {
+            no: seat.no,
+            isAttend: false,
+          };
+        }
+      }
+    }
+  });
 
   const inTime = (no: number, begin: number, end: number, events: Action[]) => {
     // eventのリストを線分に分ける
