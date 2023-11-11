@@ -24,12 +24,12 @@
 
 <style>
   g {
-    --fill: var(--non-active-fill-light);
-    --stroke: var(--non-active-stroke-light);
+    --fill: var(--non-active-fill-light, white);
+    --stroke: var(--non-active-stroke-light, black);
   }
   g.active {
-    --fill: var(--active-fill-light);
-    --stroke: var(--active-stroke-light);
+    --fill: var(--active-fill-light, black);
+    --stroke: var(--active-stroke-light, white);
   }
   ellipse {
     fill: var(--fill);
