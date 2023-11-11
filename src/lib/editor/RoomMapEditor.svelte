@@ -5,8 +5,8 @@
 
   export let _class: string;
 
-  const activeColor = "red";
-  const nonActiveColor = "white";
+  const svgW = 1200;
+  const svgH = 600;
 </script>
 
 <section class={_class}>
@@ -15,9 +15,9 @@
       xmlns="http://www.w3.org/2000/svg"
       xmlns:xlink="http://www.w3.org/1999/xlink"
       version="1.1"
-      width="1200px"
-      height="600px"
-      viewBox="0 0 1150 600"
+      width={svgW + "px"}
+      height={svgH + "px"}
+      viewBox="0 0 {svgW} {svgH}"
     >
       <g>
         {#each $currentRoom.furnitures as f}
