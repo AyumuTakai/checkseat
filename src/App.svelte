@@ -8,6 +8,7 @@
   import Tabs from "./lib/common/Tabs.svelte";
   import FurnituresSettings from "./lib/editor/FurnituresSettings.svelte";
   import GeneralSettings from "./lib/editor/GeneralSettings.svelte";
+  import RoomMapEditor from "./lib/editor/RoomMapEditor.svelte";
   import SeatsSettings from "./lib/editor/SeatsSettings.svelte";
   import TimetableSettings from "./lib/editor/TimetableSettings.svelte";
   import { currentRoom, rooms } from "./roomStore";
@@ -78,7 +79,7 @@
       --left={"0.5rem"}>Clear</Button
     >
   {:else if mode === "Editor"}
-    <RoomMap _class="halfheight" />
+    <RoomMapEditor _class="halfheight" />
     <Tabs _class="halfheight" items={tabItems[mode]} />
   {/if}
 </main>

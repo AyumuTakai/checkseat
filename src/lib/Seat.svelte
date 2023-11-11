@@ -1,108 +1,56 @@
 <script lang="ts">
-  import { currentRoom, type Room } from "../roomStore";
-  import { attend, attends, leave } from "./AttendList.svelte";
-  import { addLog } from "./EventList.svelte";
-
   export let no: number = 0;
   export let cx: number = 0;
   export let cy: number = 0;
-  //   export let attendance: Attend | undefined;
+  export let rx: number = 20;
+  export let ry: number = 20;
 
-  let el: SVGEllipseElement;
-
-  const writeLog = (msg: string) => {
-    const now = new Date();
-    // 操作ログに追加
-    addLog({
-      room: $currentRoom.name,
-      datetime: now,
-      no,
-      action: msg,
-    });
-    // 出席記録を更新
-    currentRoom.update((room: Room) => {
-      // if (!attend) {
-      //     attend = {
-      //         no,
-      //         begin: now.getHours() * 100 + now.getMinutes(),
-      //         end: 2400,
-      //     };
-      //     room.attends.push(attend);
-      // } else {
-      //     attend.end = now.getHours() * 100 + now.getMinutes();
-      //     attend = undefined;
-      // }
-      return room;
-    });
-  };
-
-  $: {
-    if (el) {
-      el.style.fill =
-        $attends[no] && $attends[no]["isAttend"]
-          ? "var(--activeColor)"
-          : "var(--nonActiveColor)";
-    }
-  }
-
-  const onClickHandler = (e: Event) => {
-    if ($attends[no] && $attends[no]["isAttend"]) {
-      writeLog("leave");
-      leave(no);
-    } else {
-      writeLog("attend");
-      attend(no);
-    }
-  };
+  export let active: boolean = false;
 </script>
 
-<!-- svelte-ignore a11y-click-events-have-key-events -->
-<ellipse
-  {cx}
-  {cy}
-  rx="20"
-  ry="20"
-  pointer-events="all"
-  on:click={onClickHandler}
-  bind:this={el}
-/>
-<!-- svelte-ignore a11y-click-events-have-key-events -->
-<text
-  x={cx}
-  y={cy}
-  on:click={onClickHandler}
-  text-anchor="middle"
-  dominant-baseline="central">{no}</text
->
+<g class={active ? "active" : ""}>
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <ellipse {cx} {cy} {rx} {ry} pointer-events="all" on:click />
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <text
+    x={cx}
+    y={cy}
+    on:click
+    text-anchor="middle"
+    dominant-baseline="central"
+    font-size={rx + "px"}>{no}</text
+  >
+</g>
 
 <style>
+  g {
+    --fill: var(--non-active-fill-light);
+    --stroke: var(--non-active-stroke-light);
+  }
+  g.active {
+    --fill: var(--active-fill-light);
+    --stroke: var(--active-stroke-light);
+  }
   ellipse {
-    --activeColor: lightgreen;
-    --nonActiveColor: white;
-    fill: white;
-    stroke: black;
+    fill: var(--fill);
+    stroke: var(--stroke);
   }
   text {
-    stroke: gray;
+    stroke: var(--stroke);
+    fill: var(--stroke);
   }
   text,
   ellipse {
     cursor: pointer;
   }
   @media (prefers-color-scheme: dark) {
-    ellipse {
-      --activeColor: orange;
-      --nonActiveColor: black;
-      fill: black;
-      stroke: white;
+    g {
+      --fill: var(--non-active-fill-dark);
+      --stroke: var(--non-active-stroke-dark);
     }
-    text {
-      stroke-width: 3;
-      stroke: black;
-      fill: white;
-      paint-order: stroke;
-      font-weight: bold;
-      stroke-linejoin: round;
+    g.active {
+      --fill: var(--active-fill-dark);
+      --stroke: var(--active-stroke-dark);
     }
   }
 </style>

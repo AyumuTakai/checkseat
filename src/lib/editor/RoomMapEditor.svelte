@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { currentRoom } from "../roomStore";
-  import Furniture from "./Furniture.svelte";
-  import SeatCheck from "./SeatCheck.svelte";
+  import { currentRoom } from "../../roomStore";
+  import Furniture from "../Furniture.svelte";
+  import Seat from "../Seat.svelte";
 
   export let _class: string;
 
@@ -31,7 +31,7 @@
           />
         {/each}
         {#each $currentRoom.seats as s}
-          <SeatCheck cx={s.cx} cy={s.cy} no={s.no} />
+          <Seat cx={s.cx} cy={s.cy} no={s.no} />
         {/each}
       </g>
     </svg>
