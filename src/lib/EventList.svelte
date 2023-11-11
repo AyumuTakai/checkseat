@@ -82,6 +82,7 @@
   ul {
     margin: 0;
     padding: 0;
+    flex-direction: column;
   }
   li {
     color: black;
