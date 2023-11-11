@@ -1,6 +1,6 @@
 <script lang="ts">
   import { currentRoom } from "../roomStore";
-  import Furniture from "./Furniture.svelte";
+  import FurnitureShape from "./FurnitureShape.svelte";
   import SeatCheck from "./SeatCheck.svelte";
 
   export let _class: string;
@@ -22,7 +22,7 @@
       <g>
         {#each $currentRoom.furnitures as f}
           {f}
-          <Furniture
+          <FurnitureShape
             x={f.x}
             y={f.y}
             width={f.width}

@@ -4,7 +4,7 @@
   import { currentRoom, type Room } from "../roomStore";
   import { attend, attends, leave } from "./AttendList.svelte";
   import { addLog } from "./EventList.svelte";
-  import Seat from "./Seat.svelte";
+  import SeatShape from "./SeatShape.svelte";
 
   export let no: number = 0;
   export let cx: number = 0;
@@ -59,7 +59,7 @@
   };
 </script>
 
-<Seat
+<SeatShape
   {no}
   {cx}
   {cy}
