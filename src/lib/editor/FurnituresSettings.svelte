@@ -16,7 +16,7 @@
 
 <section>
   <table>
-    <caption>Furnitures</caption>
+    <!-- <caption>Furnitures</caption> -->
     <tr>
       <th>x</th>
       <th>y</th>
@@ -35,7 +35,8 @@
   section {
     display: flex;
     justify-content: center;
-    padding: 1em;
+    overflow: auto;
+    height: 100%;
   }
   table {
     border: solid 1px black;
@@ -49,6 +50,11 @@
     border: solid 1px gray;
     padding: 0;
     margin: 0;
+    position: sticky;
+    background-color: white;
+    white-space: nowrap;
+    top: 0;
+    border-top: solid 1px black;
   }
   @media (prefers-color-scheme: dark) {
     section,
@@ -58,6 +64,10 @@
     }
     table {
       border-color: white;
+    }
+    th {
+      background-color: black;
+      border-top-color: white;
     }
   }
 </style>

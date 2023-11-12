@@ -1,10 +1,9 @@
 <script lang="ts">
   // https://svelte.dev/repl/cf05bd4a4ca14fb8ace8b6cdebbb58da?version=4.2.0
 
-  export let _class:string;
+  export let _class: string;
   export let items = [];
   export let activeTabValue = 1;
-
 
   const handleClick = (tabValue) => () => (activeTabValue = tabValue);
 </script>
@@ -28,6 +27,9 @@
 </section>
 
 <style>
+  section {
+    --tab-height: 2.5rem;
+  }
   .box {
     margin-bottom: 10px;
     padding: 1em;
@@ -36,6 +38,8 @@
     border-top: 0;
     background-color: white;
     overflow: scroll;
+    position: relative;
+    height: calc(100% - var(--tab-height));
   }
   ul {
     display: flex;
@@ -45,6 +49,7 @@
     border-bottom: 1px solid #dee2e6;
     margin: 0;
     padding-top: 0.2em;
+    height: var(--tab-height);
   }
   li {
     margin-bottom: -1px;
