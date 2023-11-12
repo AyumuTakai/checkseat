@@ -134,6 +134,10 @@
               on:click={() => {
                 editingObject.set(obj);
               }}
+              --non-active-fill={"white"}
+              --non-active-stroke={"black"}
+              --non-active-fill-dark={"black"}
+              --non-active-stroke-dark={"white"}
             />
           </SelectionHandleSvg>
         {/each}
