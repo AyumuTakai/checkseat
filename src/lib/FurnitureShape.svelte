@@ -23,19 +23,19 @@
 
 <style>
   rect {
-    fill: white;
-    stroke: black;
+    fill: var(--fill, none);
+    stroke: var(--stroke, black);
   }
   text {
-    fill: black;
+    fill: var(--stroke, black);
   }
   @media (prefers-color-scheme: dark) {
     rect {
-      fill: black;
-      stroke: white;
+      fill: var(--fill-dark, none);
+      stroke: var(--stroke-dark, white);
     }
     text {
-      fill: black;
+      fill: var(--stroke-dark, white);
     }
   }
 </style>

@@ -151,7 +151,6 @@
   svg {
     width: 100%;
     height: 100%;
-    fill: white;
   }
   @media (prefers-color-scheme: dark) {
     :global(body) {
@@ -159,10 +158,6 @@
     }
     section {
       background-color: black;
-    }
-    svg {
-      fill: black;
-      stroke: white;
     }
   }
 </style>

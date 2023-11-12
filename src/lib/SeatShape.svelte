@@ -36,7 +36,7 @@
     stroke: var(--stroke);
   }
   text {
-    stroke: var(--stroke);
+    stroke: none;
     fill: var(--stroke);
   }
   text,
