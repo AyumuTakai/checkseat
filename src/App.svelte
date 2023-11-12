@@ -6,11 +6,7 @@
   import RoomMap from "./lib/RoomMap.svelte";
   import Button from "./lib/common/Button.svelte";
   import Tabs from "./lib/common/Tabs.svelte";
-  import FurnituresSettings from "./lib/editor/FurnituresSettings.svelte";
-  import GeneralSettings from "./lib/editor/GeneralSettings.svelte";
-  import RoomMapEditor from "./lib/editor/RoomMapEditor.svelte";
-  import SeatsSettings from "./lib/editor/SeatsSettings.svelte";
-  import TimetableSettings from "./lib/editor/TimetableSettings.svelte";
+  import Editor from "./lib/editor/Editor.svelte";
   import { currentRoom, rooms } from "./roomStore";
 
   let mode: "Check" | "Editor" = "Check";
@@ -26,28 +22,6 @@
         label: "Log",
         value: 2,
         component: EventList,
-      },
-    ],
-    Editor: [
-      {
-        label: "General",
-        value: 1,
-        component: GeneralSettings,
-      },
-      {
-        label: "Timetable",
-        value: 2,
-        component: TimetableSettings,
-      },
-      {
-        label: "Furnitures",
-        value: 3,
-        component: FurnituresSettings,
-      },
-      {
-        label: "Seats",
-        value: 4,
-        component: SeatsSettings,
       },
     ],
   };
@@ -79,8 +53,7 @@
       --left={"0.5rem"}>Clear</Button
     >
   {:else if mode === "Editor"}
-    <RoomMapEditor _class="halfheight" />
-    <Tabs _class="halfheight" items={tabItems[mode]} />
+    <Editor />
   {/if}
 </main>
 
