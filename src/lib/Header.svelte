@@ -31,7 +31,6 @@
       <button
         class="edit"
         on:click={() => {
-          console.log("a");
           mode = "Editor";
           distpacher("changeMode", { mode });
         }}><IconEdit stroke="white" /></button

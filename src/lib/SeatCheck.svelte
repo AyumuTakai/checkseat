@@ -1,7 +1,10 @@
+<svelte:options namespace={"svg"} />
+
 <script lang="ts">
   import { currentRoom, type Room } from "../roomStore";
   import { attend, attends, leave } from "./AttendList.svelte";
   import { addLog } from "./EventList.svelte";
+  import SeatShape from "./SeatShape.svelte";
 
   export let no: number = 0;
   export let cx: number = 0;
@@ -56,53 +59,18 @@
   };
 </script>
 
-<!-- svelte-ignore a11y-click-events-have-key-events -->
-<ellipse
+<SeatShape
+  {no}
   {cx}
   {cy}
-  rx="20"
-  ry="20"
-  pointer-events="all"
+  active={$attends[no] && $attends[no]["isAttend"]}
+  --active-fill-light={"lightgreen"}
+  --active-stroke-light={"black"}
+  --active-fill-dark={"orange"}
+  --active-stroke-dark={"white"}
+  --non-active-fill-light={"white"}
+  --non-active-stroke-light={"black"}
+  --non-active-fill-dark={"black"}
+  --non-active-stroke-dark={"white"}
   on:click={onClickHandler}
-  bind:this={el}
 />
-<!-- svelte-ignore a11y-click-events-have-key-events -->
-<text
-  x={cx}
-  y={cy}
-  on:click={onClickHandler}
-  text-anchor="middle"
-  dominant-baseline="central">{no}</text
->
-
-<style>
-  ellipse {
-    --activeColor: lightgreen;
-    --nonActiveColor: white;
-    fill: white;
-    stroke: black;
-  }
-  text {
-    stroke: gray;
-  }
-  text,
-  ellipse {
-    cursor: pointer;
-  }
-  @media (prefers-color-scheme: dark) {
-    ellipse {
-      --activeColor: orange;
-      --nonActiveColor: black;
-      fill: black;
-      stroke: white;
-    }
-    text {
-      stroke-width: 3;
-      stroke: black;
-      fill: white;
-      paint-order: stroke;
-      font-weight: bold;
-      stroke-linejoin: round;
-    }
-  }
-</style>
