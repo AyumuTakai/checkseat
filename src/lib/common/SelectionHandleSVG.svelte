@@ -173,6 +173,7 @@
 <style>
   rect {
     cursor: move;
+    fill: none;
     fill-opacity: 0;
   }
 </style>
