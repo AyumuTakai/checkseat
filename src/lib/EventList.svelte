@@ -49,7 +49,7 @@
 </script>
 
 <section>
-  <Button on:click={clearLog}>Clear LOG</Button>
+  <Button on:pointerup={clearLog}>Clear LOG</Button>
   <hr />
   {#if $actionLog}
     <ul>

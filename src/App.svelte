@@ -47,7 +47,7 @@
     <RoomMap _class="halfheight" />
     <Tabs _class="halfheight" items={tabItems[mode]} />
     <Button
-      on:click={clearAttendsHandler}
+      on:pointerup={clearAttendsHandler}
       --position={"absolute"}
       --top={"0.5rem"}
       --left={"0.5rem"}>Clear</Button

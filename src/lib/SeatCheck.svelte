@@ -72,5 +72,5 @@
   --non-active-stroke-light={"black"}
   --non-active-fill-dark={"black"}
   --non-active-stroke-dark={"white"}
-  on:click={onClickHandler}
+  on:pointerup={onClickHandler}
 />

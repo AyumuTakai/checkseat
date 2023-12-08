@@ -2,10 +2,10 @@
   // https://svelte.dev/repl/cf05bd4a4ca14fb8ace8b6cdebbb58da?version=4.2.0
 
   export let _class: string;
-  export let items = [];
+  export let items: { label: string; value: any; component: any }[] = [];
   export let activeTabValue = 1;
 
-  const handleClick = (tabValue) => () => (activeTabValue = tabValue);
+  const handleClick = (tabValue: any) => () => (activeTabValue = tabValue);
 </script>
 
 <section class={_class}>
@@ -13,7 +13,7 @@
     {#each items as item}
       <li class={activeTabValue === item.value ? "active" : ""}>
         <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <span on:click={handleClick(item.value)}>{item.label}</span>
+        <span on:pointerup={handleClick(item.value)}>{item.label}</span>
       </li>
     {/each}
   </ul>

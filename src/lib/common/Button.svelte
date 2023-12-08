@@ -4,11 +4,7 @@
   const dispatcher = createEventDispatcher();
 </script>
 
-<button
-  on:click={(ev) => {
-    dispatcher("click", ev);
-  }}
->
+<button on:click on:pointerdown on:pointerup>
   <slot />
 </button>
 
