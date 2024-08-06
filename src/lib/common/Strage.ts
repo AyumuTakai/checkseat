@@ -46,15 +46,22 @@ export class StorageStore<T> {
     if (opt && opt.value) {
       value = opt.value;
       localStorage.setItem(this.name, JSON.stringify(opt.value));
+      this.writable = writable<T>(value);
     } else {
       const json = localStorage.getItem(name);
-      value = this.parse(json);
+      if(json) {
+        value = this.parse(json);
+        this.writable = writable<T>(value);
+      }else{
+        this.writable = writable<T>();
+      }
     }
-    this.writable = writable<T>(value);
   }
   set(value?: T) {
-    localStorage.setItem(this.name, this.stringify(value));
-    this.writable.set(value);
+    if (value) {
+      localStorage.setItem(this.name, this.stringify(value));
+      this.writable.set(value);
+    }
   }
   get(): T {
     return get(this.writable);
