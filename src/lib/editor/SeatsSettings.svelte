@@ -5,9 +5,11 @@
   const onSeatUpdateHandler = (ev: CustomEvent) => {
     currentRoom.update((room: Room) => {
       const seat = room.seats.find((s) => s == ev.detail.seat);
+      if(seat){
       seat.no = ev.detail.seat.no;
       seat.cx = ev.detail.seat.cx;
       seat.cy = ev.detail.seat.cy;
+      }
       return room;
     });
   };

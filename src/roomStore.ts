@@ -1,13 +1,18 @@
 import { writable } from "svelte/store";
 import type { AttendLine } from "./attendStore";
 
+/*
+ * シート設定
+ */
+export type Seat = { no: number; cx: number; cy: number };
+
 /**
  * 教室設定
  */
 export type Room = {
     name: string;
     furnitures: any[];
-    seats: any[];
+    seats: Seat[];
     timetables?: any[];
     attends: AttendLine[];
 }

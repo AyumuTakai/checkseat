@@ -1,8 +1,9 @@
 <script lang="ts">
     import { createEventDispatcher } from "svelte";
+  import type { Seat } from "../../roomStore";
 
     const distpacher = createEventDispatcher();
-    export let seat;
+  export let seat: Seat;
 </script>
 
 <tr>
