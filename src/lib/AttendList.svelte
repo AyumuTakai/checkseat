@@ -131,7 +131,7 @@
   {#if $currentRoom}
     <table>
       <tr>
-        <th>no</th>
+        <th>ラベル</th>
         <th>出席時刻</th>
         <th>退席時刻</th>
         <!--

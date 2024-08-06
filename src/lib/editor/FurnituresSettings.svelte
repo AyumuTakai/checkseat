@@ -18,11 +18,11 @@
   <table>
     <!-- <caption>Furnitures</caption> -->
     <tr>
+      <th>label</th>
       <th>x</th>
       <th>y</th>
       <th>width</th>
       <th>height</th>
-      <th>text</th>
       <th />
     </tr>
     {#each $currentRoom.furnitures as furniture}
