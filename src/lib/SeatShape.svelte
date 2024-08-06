@@ -42,6 +42,7 @@
   text,
   ellipse {
     cursor: pointer;
+    user-select: none;
   }
   @media (prefers-color-scheme: dark) {
     g {
