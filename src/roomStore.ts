@@ -1,6 +1,8 @@
 import { writable } from "svelte/store";
 import type { AttendLine } from "./attendStore";
 
+export const mode = writable<"Check"|"Editor">("Check");
+
 /*
  * シート設定
  */
@@ -77,3 +79,17 @@ export const rooms = writable<Room[]>([
 ]);
 
 
+export const createRoom = () => {
+    const newRoom: Room = {
+        name: "New Room",
+        furnitures: [],
+        seats: [],
+        attends: [],
+    };
+    rooms.update((r) => {
+        r.push(newRoom);
+        return r;
+    });
+    currentRoom.set(newRoom);
+    mode.set("Editor");
+};

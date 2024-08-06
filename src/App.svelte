@@ -7,9 +7,8 @@
   import Button from "./lib/common/Button.svelte";
   import Tabs from "./lib/common/Tabs.svelte";
   import Editor from "./lib/editor/Editor.svelte";
-  import { currentRoom, rooms } from "./roomStore";
+  import { currentRoom, mode, rooms } from "./roomStore";
 
-  let mode: "Check" | "Editor" = "Check";
 
   const tabItems = {
     Check: [
@@ -36,23 +35,23 @@
 </script>
 
 <Header
-  {mode}
+  {$mode}
   on:changeMode={(ev) => {
-    mode = ev.detail.mode;
+    $mode = ev.detail.mode;
     // console.log({ mode });
   }}
 />
 <main>
-  {#if mode === "Check"}
+  {#if $mode === "Check"}
     <RoomMap _class="halfheight" />
-    <Tabs _class="halfheight" items={tabItems[mode]} />
+    <Tabs _class="halfheight" items={tabItems[$mode]} />
     <Button
       on:pointerup={clearAttendsHandler}
       --position={"absolute"}
       --top={"0.5rem"}
       --left={"0.5rem"}>Clear</Button
     >
-  {:else if mode === "Editor"}
+  {:else if $mode === "Editor"}
     <Editor />
   {/if}
 </main>
