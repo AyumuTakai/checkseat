@@ -47,7 +47,7 @@
     <RoomMap _class="halfheight" />
     <Tabs _class="halfheight" items={tabItems[mode]} />
     <Button
-      on:click={clearAttendsHandler}
+      on:pointerup={clearAttendsHandler}
       --position={"absolute"}
       --top={"0.5rem"}
       --left={"0.5rem"}>Clear</Button
@@ -68,20 +68,21 @@
     --button-primary-bgc: var(--primary-color);
     --button-primary-c: #fff;
     --border-radius: 0.4rem;
+    overscroll-behavior: none;
   }
   main {
     position: absolute;
     top: 0;
     left: 0;
     width: 100vw;
-    height: calc(100vh - 2rem);
+    height: calc(100svh - 2rem);
     padding: 0;
     margin: 2rem 0 0;
     display: flex;
     flex-direction: column;
   }
   main :global(.halfheight) {
-    height: calc(50vh - 1rem);
+    height: calc(50svh - 1rem);
     width: 100%;
     object-fit: contain;
   }

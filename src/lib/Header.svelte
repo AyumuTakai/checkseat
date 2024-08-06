@@ -15,7 +15,7 @@
 <header>
   <h1>
     <button
-      on:click={() => {
+      on:pointerup={() => {
         showModal = true;
       }}
     >
@@ -30,7 +30,7 @@
     {#if mode === "Check"}
       <button
         class="edit"
-        on:click={() => {
+        on:pointerup={() => {
           mode = "Editor";
           distpacher("changeMode", { mode });
         }}><IconEdit stroke="white" /></button
@@ -38,7 +38,7 @@
     {:else if mode === "Editor"}
       <button
         class="edit"
-        on:click={() => {
+        on:pointerup={() => {
           mode = "Check";
           distpacher("changeMode", { mode });
         }}><IconCheck stroke="white" /></button
@@ -54,7 +54,7 @@
   }}
 >
   <button
-    on:click={() => {
+    on:pointerup={() => {
       // const room = createNewRoom();
       // currentRoom.set(room);
     }}>Create new room</button
@@ -62,7 +62,7 @@
   {#if $rooms}
     {#each $rooms as room}
       <button
-        on:click={() => {
+        on:pointerup={() => {
           currentRoom.set(room);
           showModal = false;
         }}>{room.name}</button

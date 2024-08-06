@@ -49,7 +49,7 @@
 </script>
 
 <section>
-  <Button on:click={clearLog}>Clear LOG</Button>
+  <Button on:pointerup={clearLog}>Clear LOG</Button>
   <hr />
   {#if $actionLog}
     <ul>
@@ -76,7 +76,7 @@
     box-sizing: border-box;
     width: 100%;
     height: 100%;
-    min-height: 50vh;
+    min-height: 50svh;
     background-color: white;
   }
   ul {

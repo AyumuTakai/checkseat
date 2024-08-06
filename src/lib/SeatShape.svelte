@@ -10,12 +10,12 @@
 
 <g class={active ? "active" : ""}>
   <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <ellipse {cx} {cy} {rx} {ry} pointer-events="all" on:click />
+  <ellipse {cx} {cy} {rx} {ry} pointer-events="all" on:pointerup />
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <text
     x={cx}
     y={cy}
-    on:click
+    on:pointerup
     text-anchor="middle"
     dominant-baseline="central"
     font-size={rx + "px"}>{no}</text
@@ -42,6 +42,7 @@
   text,
   ellipse {
     cursor: pointer;
+    user-select: none;
   }
   @media (prefers-color-scheme: dark) {
     g {

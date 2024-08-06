@@ -7,10 +7,20 @@
 
 <tr>
   <td
+  ><input
+    type="text"
+    value={furniture.text}
+    on:input={(ev) => {
+      furniture.text = ev.currentTarget.value;
+      distpacher("update", { furniture });
+    }}
+  /></td
+  >
+  <td
     ><input
       type="number"
       value={furniture.x}
-      on:change={(ev) => {
+      on:input={(ev) => {
         furniture.x = parseInt(ev.currentTarget.value);
         distpacher("update", { furniture });
       }}
@@ -22,7 +32,7 @@
       type="number"
       value={furniture.y}
       size="4"
-      on:change={(ev) => {
+      on:input={(ev) => {
         furniture.y = parseInt(ev.currentTarget.value);
         distpacher("update", { furniture });
       }}
@@ -33,7 +43,7 @@
       type="number"
       value={furniture.width}
       size="4"
-      on:change={(ev) => {
+      on:input={(ev) => {
         furniture.width = parseInt(ev.currentTarget.value);
         distpacher("update", { furniture });
       }}
@@ -44,18 +54,8 @@
       type="number"
       value={furniture.height}
       size="4"
-      on:change={(ev) => {
-        furniture.height = parseInt(ev.currentTarget.value);
-        distpacher("update", { furniture });
-      }}
-    /></td
-  >
-  <td
-    ><input
-      type="text"
-      value={furniture.text}
       on:input={(ev) => {
-        furniture.text = ev.currentTarget.value;
+        furniture.height = parseInt(ev.currentTarget.value);
         distpacher("update", { furniture });
       }}
     /></td

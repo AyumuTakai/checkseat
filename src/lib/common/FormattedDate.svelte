@@ -1,6 +1,9 @@
 <script lang="ts" context="module">
   // https://ribbit.konomi.app/blog/javascript-date-format/
-  export function getFormattedDate(dateOrStr: Date | string, format: string) {
+  export function getFormattedDate(dateOrStr: Date | string | undefined, format: string) {
+    
+    if (!dateOrStr) return "";
+
     const date: Date =
       typeof dateOrStr === "string" ? new Date(dateOrStr) : dateOrStr;
 
@@ -25,7 +28,7 @@
 </script>
 
 <script lang="ts">
-  export let date: Date;
+  export let date: Date | undefined;
   export let format: string;
 </script>
 

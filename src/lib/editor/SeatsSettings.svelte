@@ -5,9 +5,11 @@
   const onSeatUpdateHandler = (ev: CustomEvent) => {
     currentRoom.update((room: Room) => {
       const seat = room.seats.find((s) => s == ev.detail.seat);
-      seat.no = ev.detail.seat.no;
-      seat.cx = ev.detail.seat.cx;
-      seat.cy = ev.detail.seat.cy;
+      if(seat){
+        seat.no = ev.detail.seat.no;
+        seat.cx = ev.detail.seat.cx;
+        seat.cy = ev.detail.seat.cy;
+      }
       return room;
     });
   };
@@ -17,7 +19,7 @@
   <table>
     <caption>Seats</caption>
     <tr>
-      <th>no</th>
+      <th>label</th>
       <th>x</th>
       <th>y</th>
       <th />

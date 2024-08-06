@@ -7,7 +7,7 @@
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<g on:click>
+<g on:pointerup on:pointerdown>
   <rect {x} {y} {width} {height} pointer-events="all" />
   {#if text}
     <text
@@ -28,6 +28,7 @@
   }
   text {
     fill: var(--stroke, black);
+    user-select: none;
   }
   @media (prefers-color-scheme: dark) {
     rect {

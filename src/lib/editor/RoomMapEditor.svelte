@@ -109,7 +109,7 @@
               width={f.width}
               height={f.height}
               text={f.text}
-              on:click={() => {
+              on:pointerup={() => {
                 editingObject.set(obj);
               }}
             />
@@ -131,7 +131,7 @@
               cx={s.cx}
               cy={s.cy}
               no={s.no}
-              on:click={() => {
+              on:pointerup={() => {
                 editingObject.set(obj);
               }}
               --non-active-fill={"white"}

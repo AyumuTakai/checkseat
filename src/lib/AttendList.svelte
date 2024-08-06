@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-  import { currentRoom } from "../roomStore";
+  import { currentRoom, type Room } from "../roomStore";
   import { StorageStore } from "./common/Strage";
 
   export type Attend = {
@@ -52,8 +52,7 @@
   }
 
   export function clearAttends(): void {
-    currentRoom.update((_currentRoom) => {
-      if (_currentRoom) {
+    currentRoom.update((_currentRoom:Room) => {
         attends.update((_attends) => {
           for (const seat of _currentRoom.seats) {
             _attends[seat.no] = {
@@ -63,8 +62,7 @@
           }
           return _attends;
         });
-        return _currentRoom;
-      }
+      return _currentRoom;
     });
   }
 </script>
@@ -81,8 +79,9 @@
   currentRoom.subscribe((_currentRoom) => {
     if (_currentRoom) {
       for (const seat of _currentRoom.seats) {
-        if (!attends[seat.no]) {
-          attends[seat.no] = {
+        const no = seat.no;
+        if (!$attends[no]) {
+          $attends[no] = {
             no: seat.no,
             isAttend: false,
           };
@@ -102,7 +101,7 @@
           end: 2400,
         };
         lines.push(line);
-      } else if (ev.action == "not active") {
+      } else if (ev.action == "not active" && line) {
         line.end = ev.datetime.getHours() * 100 + ev.datetime.getMinutes();
       }
     }
@@ -131,7 +130,7 @@
   {#if $currentRoom}
     <table>
       <tr>
-        <th>no</th>
+        <th>ラベル</th>
         <th>出席時刻</th>
         <th>退席時刻</th>
         <!--

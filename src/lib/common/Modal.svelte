@@ -22,7 +22,7 @@
   <header>
     <h2>{title}</h2>
     <button
-      on:click={() => {
+      on:pointerup={() => {
         dialog.close();
         distpacher("close");
       }}><XMark stroke={"white"} /></button
