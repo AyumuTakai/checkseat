@@ -3,7 +3,6 @@
     import Modal from "./common/Modal.svelte";
 
     export let showModal: boolean = false;
-
 </script>
 
 <Modal title="rooms" show={showModal} on:close>

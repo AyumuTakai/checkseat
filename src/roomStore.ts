@@ -1,8 +1,9 @@
-import { writable } from "svelte/store";
+import { get, writable } from "svelte/store";
 import type { AttendLine } from "./attendStore";
+import { StorageStore } from "./lib/common/Strage";
+import { ulid } from "ulid";
 
-export const mode = writable<"Check"|"Editor">("Check");
-
+export const mode = writable<"Check" | "Editor">("Check");
 /*
  * シート設定
  */
@@ -12,21 +13,21 @@ export type Seat = { no: number; cx: number; cy: number };
  * 教室設定
  */
 export type Room = {
+    id: string;
     name: string;
     furnitures: any[];
     seats: Seat[];
     timetables?: any[];
     attends: AttendLine[];
 }
-/**
- * 操作対象教室
- */
-export const currentRoom = writable<Room>();
+
 /**
  * 教室設定リスト
  */
-export const rooms = writable<Room[]>([
+
+const sample_data = [
     {
+        id: '1',
         name: "295",
         furnitures: [
             { x: 70, y: 440, width: 350, height: 60, text: "" },
@@ -76,11 +77,55 @@ export const rooms = writable<Room[]>([
         ],
         attends: []
     }
-]);
+];
 
+export const rooms = new StorageStore<Room[]>('rooms',{
+    parse: (json)=>{
+        const rs = JSON.parse(json);
+        if( ! rs ) {
+            return sample_data;
+        }else{
+            return rs;
+        }
+    },
+    stringify: (rs)=>{
+        return JSON.stringify(rs);
+    }
+});
+
+/**
+ * 操作対象教室
+ */
+
+export const currentRoom = new StorageStore<Room>("currentRoom", {
+    parse: (json: string) => {
+        const rs = get(rooms);
+        if (json) {
+            const data = JSON.parse(json);
+            const id = data.id;
+            const room = rs.find((r) => r.id === id );
+            console.log({id,room,rs});
+            if (room) {
+                return room;
+            } else {
+                return rs[0];
+            }
+        } else {
+            return rs[0];
+        }
+    },
+    stringify: (room) => {
+        return JSON.stringify({ id: room.id });
+    }
+});
+
+/**
+ * ユーティリティ関数
+ */
 
 export const createRoom = () => {
     const newRoom: Room = {
+        id: ulid(),
         name: "New Room",
         furnitures: [],
         seats: [],

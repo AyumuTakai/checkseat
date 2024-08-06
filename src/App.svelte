@@ -7,7 +7,7 @@
   import Button from "./lib/common/Button.svelte";
   import Tabs from "./lib/common/Tabs.svelte";
   import Editor from "./lib/editor/Editor.svelte";
-  import { currentRoom, mode, rooms } from "./roomStore";
+  import { mode } from "./roomStore";
 
 
   const tabItems = {
@@ -26,7 +26,7 @@
   };
 
   onMount(() => {
-    currentRoom.set($rooms[0]);
+    // currentRoom.set($rooms[0]);
   });
 
   const clearAttendsHandler = () => {
@@ -35,7 +35,7 @@
 </script>
 
 <Header
-  {$mode}
+  mode={$mode}
   on:changeMode={(ev) => {
     $mode = ev.detail.mode;
     // console.log({ mode });
