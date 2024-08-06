@@ -28,6 +28,7 @@
   }
   text {
     fill: var(--stroke, black);
+    user-select: none;
   }
   @media (prefers-color-scheme: dark) {
     rect {
