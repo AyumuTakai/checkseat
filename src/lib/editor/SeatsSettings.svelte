@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { currentRoom, type Room } from "../../roomStore";
+  import { currentRoom, rooms, type Room } from "../../roomStore";
   import ScrollableTable from "../common/ScrollableTable.svelte";
   import SeatRowItem from "./SeatRowItem.svelte";
 
@@ -14,6 +14,17 @@
       return room;
     });
   };
+  const onCreateSeatHandler = (ev: Event) => {
+    currentRoom.update((room) => {
+      room.seats.push({
+        no: 0,
+        cx: 0,
+        cy: 0,
+      });
+      return room;
+    });
+    rooms.set($rooms);
+  };
 </script>
 
 <ScrollableTable>
@@ -22,8 +33,10 @@
         <th>label</th>
         <th>x</th>
         <th>y</th>
-        <th />
-      </tr>
+        <th
+        ><button title="新規追加" on:click={onCreateSeatHandler}>+</button
+        ></th
+      >      </tr>
 
     <svelte:fragment slot="body">
       {#each $currentRoom.seats as seat}
@@ -43,6 +56,10 @@
     white-space: nowrap;
     top: 0;
     border-top: solid 1px black;
+  }
+  button {
+    border: none;
+    width: 100%;
   }
   @media (prefers-color-scheme: dark) {
     th {
