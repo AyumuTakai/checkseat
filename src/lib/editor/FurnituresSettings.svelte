@@ -1,5 +1,6 @@
 <script lang="ts">
   import { currentRoom, type Room } from "../../roomStore";
+  import ScrollableTable from "../common/ScrollableTable.svelte";
   import FurnitureRowItem from "./FurnitureRowItem.svelte";
 
   const onFurnitureUpdateHandler = (ev: CustomEvent) => {
@@ -14,38 +15,22 @@
   };
 </script>
 
-<section>
-  <table>
-    <!-- <caption>Furnitures</caption> -->
-    <tr>
-      <th>label</th>
-      <th>x</th>
-      <th>y</th>
-      <th>width</th>
-      <th>height</th>
-      <th />
-    </tr>
+<ScrollableTable>
+  <tr slot="head">
+    <th>label</th>
+    <th>x</th>
+    <th>y</th>
+    <th>width</th>
+    <th>height</th>
+  </tr>
+  <svelte:fragment slot="body">
     {#each $currentRoom.furnitures as furniture}
       <FurnitureRowItem {furniture} on:update={onFurnitureUpdateHandler} />
     {/each}
-  </table>
-</section>
+  </svelte:fragment>
+</ScrollableTable>
 
 <style>
-  section {
-    display: flex;
-    justify-content: center;
-    overflow: auto;
-    height: 100%;
-  }
-  table {
-    border: solid 1px black;
-    width: 100%;
-    height: 100%;
-    border-spacing: 0;
-    margin: 0;
-    max-width: 60em;
-  }
   th {
     border: solid 1px gray;
     padding: 0;
@@ -57,14 +42,6 @@
     border-top: solid 1px black;
   }
   @media (prefers-color-scheme: dark) {
-    section,
-    table {
-      background-color: black;
-      color: white;
-    }
-    table {
-      border-color: white;
-    }
     th {
       background-color: black;
       border-top-color: white;
