@@ -5,21 +5,24 @@
 
   const onSeatUpdateHandler = (ev: CustomEvent) => {
     currentRoom.update((room: Room) => {
-      const seat = room.seats.find((s) => s == ev.detail.seat);
+      const seat = room.seats.find((s) => s.id == ev.detail.seat.id);
       if (seat) {
-        seat.no = ev.detail.seat.no;
+        seat.id = ev.detail.seat.id;
+        seat.label = ev.detail.seat.label;
         seat.cx = ev.detail.seat.cx;
         seat.cy = ev.detail.seat.cy;
       }
       return room;
     });
+    rooms.set($rooms);
   };
   const onCreateSeatHandler = (ev: Event) => {
     currentRoom.update((room) => {
       room.seats.push({
-        no: 0,
+        id: 0,
         cx: 0,
         cy: 0,
+        label: ""
       });
       return room;
     });
@@ -30,6 +33,7 @@
 <ScrollableTable>
 
       <tr slot="head">
+        <th>id</th>
         <th>label</th>
         <th>x</th>
         <th>y</th>

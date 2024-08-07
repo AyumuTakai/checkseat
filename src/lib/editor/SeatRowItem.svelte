@@ -8,12 +8,22 @@
 
 <tr>
   <td
+  ><input
+    type="number"
+    value={seat.id}
+    size="2"
+    on:input={(ev) => {
+      seat.id = parseInt(ev.currentTarget.value);
+      distpacher("update", { seat });
+    }}
+  /></td
+>
+  <td
     ><input
-      type="number"
-      value={seat.no}
-      size="4"
+      type="text"
+      value={seat.label}
       on:input={(ev) => {
-        seat.no = parseInt(ev.currentTarget.value);
+        seat.label = ev.currentTarget.value;
         distpacher("update", { seat });
       }}
     /></td

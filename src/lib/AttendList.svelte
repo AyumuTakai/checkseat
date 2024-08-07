@@ -1,15 +1,15 @@
 <script lang="ts" context="module">
   import { currentRoom, type Room } from "../roomStore";
-  import { StorageStore } from "./common/Strage";
+  import { StorageStore } from "./common/Storage";
 
   export type Attend = {
-    no: number;
+    id: number;
     isAttend: boolean;
     attendTime?: Date;
     leaveTime?: Date;
   };
 
-  export const attends = new StorageStore<{ [no: number]: Attend }>("attends", {
+  export const attends = new StorageStore<{ [id: number]: Attend }>("attends", {
     parse: (json: string) => {
       if (json) {
         return JSON.parse(json);
@@ -19,49 +19,56 @@
     },
   });
 
-  export function attend(no: number): void {
+  export const isAttend = (attends: { [id: number]: Attend }, id: number) => {
+    if (attends) {
+      return attends[id]["isAttend"];
+    }
+    return false;
+  };
+
+  export function attend(id: number): void {
     attends.update((_attends) => {
-      if (!_attends[no]) {
-        _attends[no] = {
-          no,
+      if (!_attends[id]) {
+        _attends[id] = {
+          id,
           isAttend: true,
         };
       } else {
-        _attends[no]["isAttend"] = true;
+        _attends[id]["isAttend"] = true;
       }
-      _attends[no]["attendTime"] = new Date();
+      _attends[id]["attendTime"] = new Date();
       // console.log("attend", _attends[no]);
       return _attends;
     });
   }
 
-  export function leave(no: number): void {
+  export function leave(id: number): void {
     attends.update((_attends) => {
-      if (!_attends[no]) {
-        _attends[no] = {
-          no,
+      if (!_attends[id]) {
+        _attends[id] = {
+          id,
           isAttend: false,
         };
       } else {
-        _attends[no]["isAttend"] = false;
+        _attends[id]["isAttend"] = false;
       }
-      _attends[no]["leaveTime"] = new Date();
+      _attends[id]["leaveTime"] = new Date();
       // console.log("leave", _attends[no]);
       return _attends;
     });
   }
 
   export function clearAttends(): void {
-    currentRoom.update((_currentRoom:Room) => {
-        attends.update((_attends) => {
-          for (const seat of _currentRoom.seats) {
-            _attends[seat.no] = {
-              no: seat.no,
-              isAttend: false,
-            };
-          }
-          return _attends;
-        });
+    currentRoom.update((_currentRoom: Room) => {
+      attends.update((_attends) => {
+        for (const seat of _currentRoom.seats) {
+          _attends[seat.id] = {
+            id: seat.id,
+            isAttend: false,
+          };
+        }
+        return _attends;
+      });
       return _currentRoom;
     });
   }
@@ -71,6 +78,7 @@
   import { onMount } from "svelte";
   import type { Action } from "./EventList.svelte";
   import FormattedDate from "./common/FormattedDate.svelte";
+  import ScrollableTable from "./common/ScrollableTable.svelte";
 
   const marks = ["x", "/", "○"];
 
@@ -78,11 +86,14 @@
 
   currentRoom.subscribe((_currentRoom) => {
     if (_currentRoom) {
+      if (!$attends) {
+        $attends = {};
+      }
       for (const seat of _currentRoom.seats) {
-        const no = seat.no;
-        if (!$attends[no]) {
-          $attends[no] = {
-            no: seat.no,
+        const id = seat.id;
+        if (!$attends[id]) {
+          $attends[id] = {
+            id: seat.id,
             isAttend: false,
           };
         }
@@ -126,72 +137,72 @@
   onMount(() => {});
 </script>
 
-<section>
-  {#if $currentRoom}
-    <table>
+{#if $currentRoom}
+  <ScrollableTable>
+    <svelte:fragment slot="head">
       <tr>
+        <th>ID</th>
         <th>ラベル</th>
         <th>出席時刻</th>
         <th>退席時刻</th>
         <!--
-        {#each $currentRoom.timetables as time}
-          <th>{time.title}</th>
-        {/each}
-        -->
+    {#each $currentRoom.timetables as time}
+      <th>{time.title}</th>
+    {/each}
+    -->
       </tr>
-      {#each $currentRoom.seats as seat (seat.no)}
+    </svelte:fragment>
+    <svelte:fragment slot="body">
+      {#each $currentRoom.seats as seat (seat.id)}
         <tr>
-          <th>{seat.no}</th>
+          <td>{seat.id}</td>
+          <td>{seat.label}</td>
           <td>
-            {#if $attends[seat.no] && $attends[seat.no]["attendTime"]}
+            {#if $attends[seat.id] && $attends[seat.id]["attendTime"]}
               <FormattedDate
-                date={$attends[seat.no]["attendTime"]}
+                date={$attends[seat.id]["attendTime"]}
                 format={"hh:mm:ss"}
               />
             {/if}</td
           >
           <td>
-            {#if $attends[seat.no] && $attends[seat.no]["leaveTime"]}
+            {#if $attends[seat.id] && $attends[seat.id]["leaveTime"]}
               <FormattedDate
-                date={$attends[seat.no]["leaveTime"]}
+                date={$attends[seat.id]["leaveTime"]}
                 format={"hh:mm:ss"}
               />
             {/if}
           </td>
           <!-- {#each $currentRoom.timetables as time}
-            <td>{mark(checkAttend(seat.no, time.begin, time.end))}</td>
-          {/each} -->
+      <td>{mark(checkAttend(seat.no, time.begin, time.end))}</td>
+    {/each} -->
         </tr>
       {/each}
-    </table>
-  {/if}
-</section>
+    </svelte:fragment>
+  </ScrollableTable>
+{:else}
+  <p>no data</p>
+{/if}
 
 <style>
-  section {
-    background-color: white;
-    overflow: scroll;
-    color: black;
-  }
-  table {
-    border: solid 1px gray;
-    width: 100%;
-    height: 100%;
-    border-spacing: 0;
+  th {
+    padding: 0;
     margin: 0;
+    position: sticky;
+    white-space: nowrap;
+    top: 0;
+    border-top: solid 1px black;
   }
-  th,
-  td {
-    border: solid 1px #333;
+  td,th {
+    background-color: white;
+    border: solid 1px gray;
     text-align: center;
-    color: #333;
   }
+
   @media (prefers-color-scheme: dark) {
-    th,
-    td {
+    th {
       background-color: black;
-      color: white;
-      border-color: white;
+      border-top-color: white;
     }
   }
 </style>

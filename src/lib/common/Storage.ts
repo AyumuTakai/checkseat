@@ -24,6 +24,7 @@ export class StorageStore<T> {
       value?: T;
       stringify?: (value: T) => string;
       parse?: (json: string) => T;
+      defaultValue?: T;
     }
   ) {
     this.name = name;
@@ -52,6 +53,9 @@ export class StorageStore<T> {
       if(json) {
         value = this.parse(json);
         this.writable = writable<T>(value);
+      }else if( opt && opt.defaultValue ){
+        this.writable = writable<T>(opt.defaultValue);
+        localStorage.setItem(name,JSON.stringify(opt.defaultValue));
       }else{
         this.writable = writable<T>();
       }

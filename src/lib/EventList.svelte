@@ -7,7 +7,7 @@
   export type Action = {
     room: string;
     datetime: Date;
-    no: number;
+    label: string;
     action: string;
     msg?: string;
   };
@@ -18,7 +18,7 @@
    */
   export const actionLog = writable<Action[]>(
     // ローカルストレージから復元
-    JSON.parse(localStorage.getItem("log") ?? "[]").map((action) => {
+    JSON.parse(localStorage.getItem("log") ?? "[]").map((action:Action) => {
       action.datetime = new Date(action.datetime);
       return action;
     })
@@ -61,7 +61,7 @@
               format={"yyyy/MM/dd hh:mm:ss"}
             />
             R:{event.room}
-            [{("0" + event.no).slice(-2)}] {event.action}
+            {[event.label]} {event.action}
           </li>
         {/if}
       {/each}
