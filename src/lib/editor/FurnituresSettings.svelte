@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { currentRoom, type Room } from "../../roomStore";
+  import { currentRoom, rooms, type Room } from "../../roomStore";
   import ScrollableTable from "../common/ScrollableTable.svelte";
   import FurnitureRowItem from "./FurnitureRowItem.svelte";
 
@@ -13,6 +13,20 @@
       return room;
     });
   };
+
+  const onCreateFurnitureHandler = (ev: Event) => {
+    currentRoom.update((room) => {
+      room.furnitures.push({
+        x: 0,
+        y: 0,
+        width: 100,
+        height: 60,
+        text: "",
+      });
+      return room;
+    });
+    rooms.set($rooms);
+  };
 </script>
 
 <ScrollableTable>
@@ -22,6 +36,10 @@
     <th>y</th>
     <th>width</th>
     <th>height</th>
+    <th
+      ><button title="新規追加" on:click={onCreateFurnitureHandler}>+</button
+      ></th
+    >
   </tr>
   <svelte:fragment slot="body">
     {#each $currentRoom.furnitures as furniture}
@@ -40,6 +58,10 @@
     white-space: nowrap;
     top: 0;
     border-top: solid 1px black;
+  }
+  button {
+    border: none;
+    width: 100%;
   }
   @media (prefers-color-scheme: dark) {
     th {
