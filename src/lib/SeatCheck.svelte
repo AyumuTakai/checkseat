@@ -20,6 +20,7 @@
     addLog({
       room: $currentRoom.name,
       datetime: now,
+      id,
       label,
       action: msg,
     });

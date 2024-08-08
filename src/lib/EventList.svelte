@@ -7,6 +7,7 @@
   export type Action = {
     room: string;
     datetime: Date;
+    id: number;
     label: string;
     action: string;
     msg?: string;
@@ -61,6 +62,7 @@
               format={"yyyy/MM/dd hh:mm:ss"}
             />
             R:{event.room}
+            {[event.id]} 
             {[event.label]} {event.action}
           </li>
         {/if}
