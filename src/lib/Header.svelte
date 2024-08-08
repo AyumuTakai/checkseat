@@ -1,9 +1,9 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
-  import { currentRoom /*, createNewRoom */, rooms } from "../roomStore";
+  import { currentRoom } from "../roomStore";
   import IconCheck from "./Icons/IconCheck.svelte";
   import IconEdit from "./Icons/IconEdit.svelte";
-  import Modal from "./common/Modal.svelte";
+  import RoomListDialog from "./RoomListDialog.svelte";
 
   export let mode: "Check" | "Editor";
 
@@ -46,30 +46,7 @@
     {/if}
   {/if}
 </header>
-<Modal
-  title="rooms"
-  show={showModal}
-  on:close={() => {
-    showModal = false;
-  }}
->
-  <button
-    on:pointerup={() => {
-      // const room = createNewRoom();
-      // currentRoom.set(room);
-    }}>Create new room</button
-  >
-  {#if $rooms}
-    {#each $rooms as room}
-      <button
-        on:pointerup={() => {
-          currentRoom.set(room);
-          showModal = false;
-        }}>{room.name}</button
-      >
-    {/each}
-  {/if}
-</Modal>
+<RoomListDialog showModal={showModal} on:close={()=>{showModal=false}} />
 
 <style>
   header {

@@ -132,24 +132,26 @@ export class Attends {
     }
     /**
      * 出席
-     * @param {number} no 出席番号
+     * @param {number} id 出席番号
      * @param {Date} [now = new Date() ] 現在時刻 
      */
-    public active(no: any, now: Date = new Date()) {
+    public active(id: number, now: Date = new Date()) {
         const end = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59);
         let attend;
-        if (!this.list[no]) {
-            this.list[no] = [] as Attend[];
-            attend = new Attend(no, now, end);
-            this.list[no].push(attend);
-        } else if ((now.getTime() - this.list[no].at(-1).end.getTime()) >= 1000 * 60) {
-            attend = new Attend(no, now, end);
-            this.list[no].push(attend);
+        if (!this.list[id]) {
+            this.list[id] = [] as Attend[];
+            attend = new Attend(id, now, end);
+            this.list[id].push(attend);
+        } else if ((now.getTime() - this.list[id].at(-1).end.getTime()) >= 1000 * 60) {
+            attend = new Attend(id, now, end);
+            this.list[id].push(attend);
         } else {
             // 退席してから1分未満に出席にした場合は操作ミスとして前の出席と結合
             // 終了時間を戻す
-            attend = this.list[no].at(-1);
-            attend.end = end;
+            attend = this.list[id].at(-1);
+            if(attend) {
+                attend.end = end;
+            }
         }
         return attend;
     }
@@ -162,10 +164,12 @@ export class Attends {
         const list = this.get(no);
         if (list) {
             const attend = list.at(-1);
-            if (attend.begin.getTime() > now.getTime()) {
-                throw new AttendTimeError("Invalid Time");
+            if(attend) {
+                if (attend.begin.getTime() > now.getTime()) {
+                    throw new AttendTimeError("Invalid Time");
+                }
+                attend.end = now;
             }
-            attend.end = now;
             return attend;
         } else {
             throw new AttendInvalidActionError("Invalid action");

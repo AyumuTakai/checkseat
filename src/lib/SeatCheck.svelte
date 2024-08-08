@@ -2,11 +2,12 @@
 
 <script lang="ts">
   import { currentRoom, type Room } from "../roomStore";
-  import { attend, attends, leave } from "./AttendList.svelte";
+  import { attend, attends, isAttend, leave } from "./AttendList.svelte";
   import { addLog } from "./EventList.svelte";
   import SeatShape from "./SeatShape.svelte";
 
-  export let no: number = 0;
+  export let id: number = 0;
+  export let label: string = "";
   export let cx: number = 0;
   export let cy: number = 0;
   //   export let attendance: Attend | undefined;
@@ -19,7 +20,8 @@
     addLog({
       room: $currentRoom.name,
       datetime: now,
-      no,
+      id,
+      label,
       action: msg,
     });
     // 出席記録を更新
@@ -42,28 +44,29 @@
   $: {
     if (el) {
       el.style.fill =
-        $attends[no] && $attends[no]["isAttend"]
+        $attends[id] && $attends[id]["isAttend"]
           ? "var(--activeColor)"
           : "var(--nonActiveColor)";
     }
   }
 
   const onClickHandler = (e: Event) => {
-    if ($attends[no] && $attends[no]["isAttend"]) {
+    if (isAttend($attends,id)) {
       writeLog("leave");
-      leave(no);
+      leave(id);
     } else {
       writeLog("attend");
-      attend(no);
+      attend(id);
     }
   };
 </script>
 
 <SeatShape
-  {no}
+  {id}
+  {label}
   {cx}
   {cy}
-  active={$attends[no] && $attends[no]["isAttend"]}
+  active={isAttend($attends,id)}
   --active-fill-light={"lightgreen"}
   --active-stroke-light={"black"}
   --active-fill-dark={"orange"}

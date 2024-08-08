@@ -1,8 +1,8 @@
 <script lang="ts" context="module">
   export class FurnitureWrapper implements ScalableObject {
-    furniture: { x: number; y: number; width: number; height: number };
+    furniture: Furniture;
 
-    constructor(f: { x: number; y: number; width: number; height: number }) {
+    constructor(f:Furniture) {
       this.furniture = f;
     }
     get left() {
@@ -36,9 +36,9 @@
   }
 
   export class SeatWrapper implements ScalableObject {
-    seat: { cx: number; cy: number; no: number };
+    seat: Seat;
     r = 20;
-    constructor(seat: { cx: number; cy: number; no: number }) {
+    constructor(seat: Seat) {
       this.seat = seat;
     }
     get left() {
@@ -54,7 +54,7 @@
       return this.seat.cy + this.r;
     }
     get key() {
-      return `${this.seat.cx}:${this.seat.cy}:${this.seat.no}`;
+      return `${this.seat.cx}:${this.seat.cy}:${this.seat.id}`;
     }
     update(v: { left: number; top: number; right: number; bottom: number }) {
       const { left, right, top, bottom } = v;
@@ -66,11 +66,11 @@
 </script>
 
 <script lang="ts">
-  import { currentRoom } from "../../roomStore";
+  import { currentRoom, type Furniture, type Seat } from "../../roomStore";
   import FurnitureShape from "../FurnitureShape.svelte";
   import SeatShape from "../SeatShape.svelte";
   import SelectionHandleSvg, {
-    type ScalableObject,
+      type ScalableObject,
   } from "../common/SelectionHandleSVG.svelte";
   import { editingObject } from "./Editor.svelte";
 
@@ -108,7 +108,7 @@
               y={f.y}
               width={f.width}
               height={f.height}
-              text={f.text}
+              text={f.label}
               on:pointerup={() => {
                 editingObject.set(obj);
               }}
@@ -120,7 +120,7 @@
           <SelectionHandleSvg
             target={obj}
             active={$editingObject &&
-              $editingObject.key === `${s.cx}:${s.cy}:${s.no}`}
+              $editingObject.key === `${s.cx}:${s.cy}:${s.id}`}
             resizable={false}
             movable={true}
             on:update={(ev) => {
@@ -130,7 +130,8 @@
             <SeatShape
               cx={s.cx}
               cy={s.cy}
-              no={s.no}
+              id={s.id}
+              label={s.label}
               on:pointerup={() => {
                 editingObject.set(obj);
               }}

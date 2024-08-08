@@ -24,6 +24,7 @@ export class StorageStore<T> {
       value?: T;
       stringify?: (value: T) => string;
       parse?: (json: string) => T;
+      defaultValue?: T;
     }
   ) {
     this.name = name;
@@ -46,15 +47,25 @@ export class StorageStore<T> {
     if (opt && opt.value) {
       value = opt.value;
       localStorage.setItem(this.name, JSON.stringify(opt.value));
+      this.writable = writable<T>(value);
     } else {
       const json = localStorage.getItem(name);
-      value = this.parse(json);
+      if(json) {
+        value = this.parse(json);
+        this.writable = writable<T>(value);
+      }else if( opt && opt.defaultValue ){
+        this.writable = writable<T>(opt.defaultValue);
+        localStorage.setItem(name,JSON.stringify(opt.defaultValue));
+      }else{
+        this.writable = writable<T>();
+      }
     }
-    this.writable = writable<T>(value);
   }
   set(value?: T) {
-    localStorage.setItem(this.name, this.stringify(value));
-    this.writable.set(value);
+    if (value) {
+      localStorage.setItem(this.name, this.stringify(value));
+      this.writable.set(value);
+    }
   }
   get(): T {
     return get(this.writable);

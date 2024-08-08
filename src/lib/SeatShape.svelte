@@ -1,5 +1,6 @@
 <script lang="ts">
-  export let no: number = 0;
+  export let id: number = 0;
+  export let label: string = "";
   export let cx: number = 0;
   export let cy: number = 0;
   export let rx: number = 20;
@@ -9,6 +10,7 @@
 </script>
 
 <g class={active ? "active" : ""}>
+  <title>{label}</title>
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <ellipse {cx} {cy} {rx} {ry} pointer-events="all" on:pointerup />
   <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -18,7 +20,7 @@
     on:pointerup
     text-anchor="middle"
     dominant-baseline="central"
-    font-size={rx + "px"}>{no}</text
+    font-size={rx + "px"}>{id}</text
   >
 </g>
 

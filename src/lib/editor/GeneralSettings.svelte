@@ -1,10 +1,17 @@
 <script lang="ts">
-  import { currentRoom } from "../../roomStore";
+  import { currentRoom, rooms } from "../../roomStore";
+
+  const renameRoom = (ev:Event)=>{
+    const elm = ev.target as HTMLInputElement;
+    $currentRoom.name = elm.value;
+    rooms.set($rooms);
+  }
+
 </script>
 
 <section>
   <p>
-    RoomName:<input type="text" list="rooms" value={$currentRoom.name} />
+    RoomName:<input type="text" list="rooms" value={$currentRoom.name} on:input={renameRoom} />
   </p>
 </section>
 

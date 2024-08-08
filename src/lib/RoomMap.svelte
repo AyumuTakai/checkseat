@@ -30,11 +30,11 @@
             y={f.y}
             width={f.width}
             height={f.height}
-            text={f.text}
+            text={f.label}
           />
         {/each}
         {#each $currentRoom.seats as s}
-          <SeatCheck cx={s.cx} cy={s.cy} no={s.no} />
+          <SeatCheck cx={s.cx} cy={s.cy} id={s.id} />
         {/each}
       </g>
     </svg>
